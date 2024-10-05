@@ -150,7 +150,7 @@ def main():
         show_dashboard()  # Toon het dashboard na succesvolle login
     else:
         st.sidebar.title("Navigatie")
-        optie = st.sidebar.radio("Selecteer een optie", ("Login", "Registreer"))
+        optie = st.sidebar.radio("Selecteer optie", ("Login", "Registreer"))
         
         if optie == "Login":
             login()
