@@ -40,44 +40,44 @@ def create_user(username, password):
 def show_dashboard():
     st.markdown("<h1 style='text-align:center;'>Dashboard</h1>", unsafe_allow_html=True)
     
-    # Data voor de grafieken
-    x = np.linspace(0, 10, 100)
-    bar_x = np.array([1, 2, 3, 4, 5])
-    scatter_x = np.random.rand(100)
-    scatter_y = np.random.rand(100)
-    
     # Keuzemenu voor grafieken aan de linkerzijde
     graph_options = st.sidebar.radio(
         "Kies een grafiek",
-        options=("Lijngrafiek", "Staafdiagram", "Horizontale Staafdiagram", "Scatterplot")
+        options=("Ingevoerde Gegevens Lijngrafiek", "Staafdiagram", "Horizontale Staafdiagram", "Scatterplot")
     )
 
-    # 2. Aanpasbare Lijngrafiek voor sin(x) en cos(x)
-    if graph_options == "Lijngrafiek":
-        st.markdown("<h2 style='text-align:center;'>Lijngrafiek</h2>", unsafe_allow_html=True)
+    # 1. Gegevensinvoer voor een Lijngrafiek
+    if graph_options == "Ingevoerde Gegevens Lijngrafiek":
+        st.markdown("<h2 style='text-align:center;'>Ingevoerde Gegevens Lijngrafiek</h2>", unsafe_allow_html=True)
 
-        # Kleur- en lijnstijlopties voor sin(x)
-        sin_color_option = st.sidebar.selectbox("Kies een kleur voor sin(x)", ("blauw", "groen", "rood"))
-        sin_line_style = st.sidebar.selectbox("Kies een lijnstijl voor sin(x)", ("-", "--", "-.", ":"))
+        # Invoervelden voor X- en Y-waarden
+        x_values = st.text_input("Voer X-waarden in (gescheiden door komma's)", "1, 2, 3, 4, 5")
+        y_values = st.text_input("Voer Y-waarden in (gescheiden door komma's)", "10, 20, 30, 40, 50")
 
-        # Kleur- en lijnstijlopties voor cos(x)
-        cos_color_option = st.sidebar.selectbox("Kies een kleur voor cos(x)", ("blauw", "groen", "rood"))
-        cos_line_style = st.sidebar.selectbox("Kies een lijnstijl voor cos(x)", ("-", "--", "-.", ":"))
-        
-        # Koppel de Nederlandse termen aan matplotlib kleuren
-        color_mapping = {"blauw": "blue", "groen": "green", "rood": "red"}
-        
-        fig = plt.figure()
-        plt.plot(x, np.sin(x), color=color_mapping[sin_color_option], linestyle=sin_line_style, label='sin(x)')
-        plt.plot(x, np.cos(x), color=color_mapping[cos_color_option], linestyle=cos_line_style, label='cos(x)')
-        plt.legend()
-        st.pyplot(fig)
+        if st.button("Genereer Grafiek"):
+            try:
+                x = [float(i) for i in x_values.split(",")]
+                y = [float(i) for i in y_values.split(",")]
+                
+                if len(x) != len(y):
+                    st.error("X- en Y-waarden moeten dezelfde lengte hebben!")
+                else:
+                    fig = plt.figure()
+                    plt.plot(x, y, marker='o', linestyle='-', color='blue', label='Ingevoerde Gegevens')
+                    plt.xlabel('X-waarden')
+                    plt.ylabel('Y-waarden')
+                    plt.title('Lijngrafiek van Ingevoerde Gegevens')
+                    plt.legend()
+                    st.pyplot(fig)
+
+            except ValueError:
+                st.error("Voer geldige numerieke waarden in.")
 
     # Staafdiagram
     elif graph_options == "Staafdiagram":
         st.markdown("<h2 style='text-align:center;'>Staafdiagram</h2>", unsafe_allow_html=True)
         fig = plt.figure()
-        plt.bar(bar_x, bar_x * 10)
+        plt.bar([1, 2, 3], [10, 20, 15])
         plt.xlabel('Categorieën')
         plt.ylabel('Waarden')
         st.pyplot(fig)
@@ -86,26 +86,23 @@ def show_dashboard():
     elif graph_options == "Horizontale Staafdiagram":
         st.markdown("<h2 style='text-align:center;'>Horizontale Staafdiagram</h2>", unsafe_allow_html=True)
         fig = plt.figure()
-        plt.barh(bar_x, bar_x * 10)
+        plt.barh([1, 2, 3], [10, 20, 15])
         plt.xlabel('Waarden')
         plt.ylabel('Categorieën')
         st.pyplot(fig)
 
-    # 5. Scatterplot zonder filter, maar met Statistieken
+    # Scatterplot
     elif graph_options == "Scatterplot":
         st.markdown("<h2 style='text-align:center;'>Scatterplot</h2>", unsafe_allow_html=True)
+        
+        scatter_x = np.random.rand(100)
+        scatter_y = np.random.rand(100)
         
         fig = plt.figure()
         plt.scatter(scatter_x, scatter_y, c='blue', alpha=0.5)
         plt.xlabel('X-as')
         plt.ylabel('Y-as')
         st.pyplot(fig)
-
-        # Statistieken
-        st.write(f"Gemiddelde X: {np.mean(scatter_x):.2f}")
-        st.write(f"Gemiddelde Y: {np.mean(scatter_y):.2f}")
-        st.write(f"Standaarddeviatie X: {np.std(scatter_x):.2f}")
-        st.write(f"Standaarddeviatie Y: {np.std(scatter_y):.2f}")
 
 # Streamlit login scherm
 def login():
