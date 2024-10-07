@@ -7,7 +7,6 @@ from matplotlib import pyplot as plt
 import numpy as np
 from io import BytesIO
 import logging
-from fpdf import FPDF
 
 # Functie om het gebruikersbestand te laden
 def load_users():
@@ -49,38 +48,6 @@ def download_plot(fig, filename="plot.png"):
     fig.savefig(buf, format="png")
     buf.seek(0)
     return buf
-
-# Functie om een PDF te genereren
-def generate_pdf(line_chart_buf, bar_chart_buf, horizontal_bar_chart_buf, scatter_plot_buf):
-    pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
-
-    # Lijngrafiek
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Lijngrafiek: sin(x) en cos(x)", ln=True)
-    pdf.image(line_chart_buf, x=10, y=20, w=180)
-
-    # Staafdiagram
-    pdf.add_page()
-    pdf.cell(200, 10, txt="Staafdiagram", ln=True)
-    pdf.image(bar_chart_buf, x=10, y=20, w=180)
-
-    # Horizontale staafdiagram
-    pdf.add_page()
-    pdf.cell(200, 10, txt="Horizontale Staafdiagram", ln=True)
-    pdf.image(horizontal_bar_chart_buf, x=10, y=20, w=180)
-
-    # Scatterplot
-    pdf.add_page()
-    pdf.cell(200, 10, txt="Scatterplot", ln=True)
-    pdf.image(scatter_plot_buf, x=10, y=20, w=180)
-
-    # PDF terugsturen als buffer
-    pdf_output = BytesIO()
-    pdf.output(pdf_output)
-    pdf_output.seek(0)
-    return pdf_output
 
 # Dashboard functie met grafieken
 def show_dashboard():
@@ -221,16 +188,6 @@ def main():
 
     if st.session_state.logged_in and st.session_state.show_dashboard:
         show_dashboard()
-
-        # Controleer of alle grafieken bestaan in de session_state voordat ze worden gedownload als PDF
-        if st.sidebar.button("Download alle grafieken als PDF"):
-            line_chart_buf = download_plot(st.session_state.get('fig_line_chart')) if 'fig_line_chart' in st.session_state else None
-            bar_chart_buf = download_plot(st.session_state.get('fig_bar_chart')) if 'fig_bar_chart' in st.session_state else None
-            horizontal_bar_chart_buf = download_plot(st.session_state.get('fig_horizontal_bar_chart')) if 'fig_horizontal_bar_chart' in st.session_state else None
-            scatter_plot_buf = download_plot(st.session_state.get('fig_scatter_plot')) if 'fig_scatter_plot' in st.session_state else None
-
-            pdf_buf = generate_pdf(line_chart_buf, bar_chart_buf, horizontal_bar_chart_buf, scatter_plot_buf)
-            st.download_button("Download PDF", pdf_buf, file_name="alle_grafieken.pdf", mime="application/pdf")
     else:
         st.sidebar.title("Navigatie")
         optie = st.sidebar.radio("Selecteer een optie", ("Login", "Registreer"))
