@@ -51,7 +51,7 @@ def download_plot(fig, filename="plot.png"):
     return buf
 
 # Functie om een PDF te genereren
-def generate_pdf():
+def generate_pdf(line_chart_buf, bar_chart_buf, horizontal_bar_chart_buf, scatter_plot_buf):
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
 
@@ -59,22 +59,22 @@ def generate_pdf():
     pdf.add_page()
     pdf.set_font("Arial", size=12)
     pdf.cell(200, 10, txt="Lijngrafiek: sin(x) en cos(x)", ln=True)
-    pdf.image("line_chart.png", x=10, y=20, w=180)
+    pdf.image(line_chart_buf, x=10, y=20, w=180)
 
     # Staafdiagram
     pdf.add_page()
     pdf.cell(200, 10, txt="Staafdiagram", ln=True)
-    pdf.image("bar_chart.png", x=10, y=20, w=180)
+    pdf.image(bar_chart_buf, x=10, y=20, w=180)
 
     # Horizontale staafdiagram
     pdf.add_page()
     pdf.cell(200, 10, txt="Horizontale Staafdiagram", ln=True)
-    pdf.image("horizontal_bar_chart.png", x=10, y=20, w=180)
+    pdf.image(horizontal_bar_chart_buf, x=10, y=20, w=180)
 
     # Scatterplot
     pdf.add_page()
     pdf.cell(200, 10, txt="Scatterplot", ln=True)
-    pdf.image("scatter_plot.png", x=10, y=20, w=180)
+    pdf.image(scatter_plot_buf, x=10, y=20, w=180)
 
     # PDF terugsturen als buffer
     pdf_output = BytesIO()
@@ -82,58 +82,103 @@ def generate_pdf():
     pdf_output.seek(0)
     return pdf_output
 
-# Dashboard functie met grafieken en downloadknoppen
+# Dashboard functie met grafieken
 def show_dashboard():
     st.markdown("<h1 style='text-align:center;'>Dashboard</h1>", unsafe_allow_html=True)
-
+    
     # Data voor de grafieken
     x = np.linspace(0, 10, 100)
     bar_x = np.array([1, 2, 3, 4, 5])
     scatter_x = np.random.rand(100)
     scatter_y = np.random.rand(100)
-
+    
+    # Keuzemenu voor grafieken aan de linkerzijde
     graph_options = st.sidebar.radio(
         "Kies een grafiek",
         options=("Lijngrafiek", "Staafdiagram", "Horizontale Staafdiagram", "Scatterplot")
     )
 
+    # 2. Aanpasbare Lijngrafiek voor sin(x) en cos(x)
     if graph_options == "Lijngrafiek":
         st.markdown("<h2 style='text-align:center;'>Lijngrafiek</h2>", unsafe_allow_html=True)
-        fig, ax = plt.subplots()
-        ax.plot(x, np.sin(x), label="sin(x)")
-        ax.plot(x, np.cos(x), label="cos(x)")
-        ax.legend()
-        st.pyplot(fig)
-        buf = download_plot(fig)
-        st.download_button("Download Lijngrafiek als PNG", buf, file_name="line_chart.png", mime="image/png")
-        logging.info("Lijngrafiek bekeken en gedownload.")
 
+        # Kleur- en lijnstijlopties voor sin(x)
+        sin_color_option = st.sidebar.selectbox("Kies een kleur voor sin(x)", ("blauw", "groen", "rood"))
+        sin_line_style = st.sidebar.selectbox("Kies een lijnstijl voor sin(x)", ("-", "--", "-.", ":"))
+
+        # Kleur- en lijnstijlopties voor cos(x)
+        cos_color_option = st.sidebar.selectbox("Kies een kleur voor cos(x)", ("blauw", "groen", "rood"))
+        cos_line_style = st.sidebar.selectbox("Kies een lijnstijl voor cos(x)", ("-", "--", "-.", ":"))
+        
+        # Koppel de Nederlandse termen aan matplotlib kleuren
+        color_mapping = {"blauw": "blue", "groen": "green", "rood": "red"}
+        
+        fig_line_chart = plt.figure()
+        plt.plot(x, np.sin(x), color=color_mapping[sin_color_option], linestyle=sin_line_style, label='sin(x)')
+        plt.plot(x, np.cos(x), color=color_mapping[cos_color_option], linestyle=cos_line_style, label='cos(x)')
+        plt.legend()
+        st.pyplot(fig_line_chart)
+
+        # Sla de figuur op in de session_state
+        st.session_state['fig_line_chart'] = fig_line_chart
+
+        # Voeg een download knop toe voor de lijngrafiek
+        buf_line_chart = download_plot(fig_line_chart)
+        st.download_button("Download Lijngrafiek als PNG", buf_line_chart, "lijngrafiek.png", "image/png")
+
+    # Staafdiagram
     elif graph_options == "Staafdiagram":
         st.markdown("<h2 style='text-align:center;'>Staafdiagram</h2>", unsafe_allow_html=True)
-        fig, ax = plt.subplots()
-        ax.bar(bar_x, bar_x * 10)
-        st.pyplot(fig)
-        buf = download_plot(fig)
-        st.download_button("Download Staafdiagram als PNG", buf, file_name="bar_chart.png", mime="image/png")
-        logging.info("Staafdiagram bekeken en gedownload.")
+        fig_bar_chart = plt.figure()
+        plt.bar(bar_x, bar_x * 10)
+        plt.xlabel('Categorieën')
+        plt.ylabel('Waarden')
+        st.pyplot(fig_bar_chart)
 
+        # Sla de figuur op in de session_state
+        st.session_state['fig_bar_chart'] = fig_bar_chart
+
+        # Voeg een download knop toe voor de staafdiagram
+        buf_bar_chart = download_plot(fig_bar_chart)
+        st.download_button("Download Staafdiagram als PNG", buf_bar_chart, "staafdiagram.png", "image/png")
+
+    # Horizontale Staafdiagram
     elif graph_options == "Horizontale Staafdiagram":
         st.markdown("<h2 style='text-align:center;'>Horizontale Staafdiagram</h2>", unsafe_allow_html=True)
-        fig, ax = plt.subplots()
-        ax.barh(bar_x, bar_x * 10)
-        st.pyplot(fig)
-        buf = download_plot(fig)
-        st.download_button("Download Horizontale Staafdiagram als PNG", buf, file_name="horizontal_bar_chart.png", mime="image/png")
-        logging.info("Horizontale Staafdiagram bekeken en gedownload.")
+        fig_horizontal_bar_chart = plt.figure()
+        plt.barh(bar_x, bar_x * 10)
+        plt.xlabel('Waarden')
+        plt.ylabel('Categorieën')
+        st.pyplot(fig_horizontal_bar_chart)
 
+        # Sla de figuur op in de session_state
+        st.session_state['fig_horizontal_bar_chart'] = fig_horizontal_bar_chart
+
+        # Voeg een download knop toe voor de horizontale staafdiagram
+        buf_horizontal_bar_chart = download_plot(fig_horizontal_bar_chart)
+        st.download_button("Download Horizontale Staafdiagram als PNG", buf_horizontal_bar_chart, "horizontale_staafdiagram.png", "image/png")
+
+    # Scatterplot
     elif graph_options == "Scatterplot":
         st.markdown("<h2 style='text-align:center;'>Scatterplot</h2>", unsafe_allow_html=True)
-        fig, ax = plt.subplots()
-        ax.scatter(scatter_x, scatter_y)
-        st.pyplot(fig)
-        buf = download_plot(fig)
-        st.download_button("Download Scatterplot als PNG", buf, file_name="scatter_plot.png", mime="image/png")
-        logging.info("Scatterplot bekeken en gedownload.")
+        fig_scatter_plot = plt.figure()
+        plt.scatter(scatter_x, scatter_y, c='blue', alpha=0.5)
+        plt.xlabel('X-as')
+        plt.ylabel('Y-as')
+        st.pyplot(fig_scatter_plot)
+
+        # Sla de figuur op in de session_state
+        st.session_state['fig_scatter_plot'] = fig_scatter_plot
+
+        # Voeg een download knop toe voor de scatterplot
+        buf_scatter_plot = download_plot(fig_scatter_plot)
+        st.download_button("Download Scatterplot als PNG", buf_scatter_plot, "scatterplot.png", "image/png")
+
+        # Statistieken
+        st.write(f"Gemiddelde X: {np.mean(scatter_x):.2f}")
+        st.write(f"Gemiddelde Y: {np.mean(scatter_y):.2f}")
+        st.write(f"Standaarddeviatie X: {np.std(scatter_x):.2f}")
+        st.write(f"Standaarddeviatie Y: {np.std(scatter_y):.2f}")
 
 # Streamlit login scherm
 def login():
@@ -176,10 +221,16 @@ def main():
 
     if st.session_state.logged_in and st.session_state.show_dashboard:
         show_dashboard()
+
+        # Controleer of alle grafieken bestaan in de session_state voordat ze worden gedownload als PDF
         if st.sidebar.button("Download alle grafieken als PDF"):
-            pdf_buf = generate_pdf()
+            line_chart_buf = download_plot(st.session_state.get('fig_line_chart')) if 'fig_line_chart' in st.session_state else None
+            bar_chart_buf = download_plot(st.session_state.get('fig_bar_chart')) if 'fig_bar_chart' in st.session_state else None
+            horizontal_bar_chart_buf = download_plot(st.session_state.get('fig_horizontal_bar_chart')) if 'fig_horizontal_bar_chart' in st.session_state else None
+            scatter_plot_buf = download_plot(st.session_state.get('fig_scatter_plot')) if 'fig_scatter_plot' in st.session_state else None
+
+            pdf_buf = generate_pdf(line_chart_buf, bar_chart_buf, horizontal_bar_chart_buf, scatter_plot_buf)
             st.download_button("Download PDF", pdf_buf, file_name="alle_grafieken.pdf", mime="application/pdf")
-            logging.info("PDF met alle grafieken gedownload.")
     else:
         st.sidebar.title("Navigatie")
         optie = st.sidebar.radio("Selecteer een optie", ("Login", "Registreer"))
