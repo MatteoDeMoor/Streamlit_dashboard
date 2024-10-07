@@ -2,8 +2,12 @@ import streamlit as st
 import bcrypt
 import json
 import os
+import pandas as pd
 from matplotlib import pyplot as plt
 import numpy as np
+from io import BytesIO
+import logging
+from fpdf import FPDF
 
 # Functie om het gebruikersbestand te laden
 def load_users():
@@ -36,122 +40,150 @@ def create_user(username, password):
     
     return True
 
-# Dashboard functie met grafieken
+# Logging configureren
+logging.basicConfig(filename="app_log.log", level=logging.INFO, format="%(asctime)s - %(message)s")
+
+# Functie om grafieken naar PNG te converteren en te downloaden
+def download_plot(fig, filename="plot.png"):
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    buf.seek(0)
+    return buf
+
+# Functie om een PDF te genereren
+def generate_pdf():
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+
+    # Lijngrafiek
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt="Lijngrafiek: sin(x) en cos(x)", ln=True)
+    pdf.image("line_chart.png", x=10, y=20, w=180)
+
+    # Staafdiagram
+    pdf.add_page()
+    pdf.cell(200, 10, txt="Staafdiagram", ln=True)
+    pdf.image("bar_chart.png", x=10, y=20, w=180)
+
+    # Horizontale staafdiagram
+    pdf.add_page()
+    pdf.cell(200, 10, txt="Horizontale Staafdiagram", ln=True)
+    pdf.image("horizontal_bar_chart.png", x=10, y=20, w=180)
+
+    # Scatterplot
+    pdf.add_page()
+    pdf.cell(200, 10, txt="Scatterplot", ln=True)
+    pdf.image("scatter_plot.png", x=10, y=20, w=180)
+
+    # PDF terugsturen als buffer
+    pdf_output = BytesIO()
+    pdf.output(pdf_output)
+    pdf_output.seek(0)
+    return pdf_output
+
+# Dashboard functie met grafieken en downloadknoppen
 def show_dashboard():
     st.markdown("<h1 style='text-align:center;'>Dashboard</h1>", unsafe_allow_html=True)
-    
+
     # Data voor de grafieken
     x = np.linspace(0, 10, 100)
     bar_x = np.array([1, 2, 3, 4, 5])
     scatter_x = np.random.rand(100)
     scatter_y = np.random.rand(100)
-    
-    # Keuzemenu voor grafieken aan de linkerzijde
+
     graph_options = st.sidebar.radio(
         "Kies een grafiek",
         options=("Lijngrafiek", "Staafdiagram", "Horizontale Staafdiagram", "Scatterplot")
     )
 
-    # 2. Aanpasbare Lijngrafiek voor sin(x) en cos(x)
     if graph_options == "Lijngrafiek":
         st.markdown("<h2 style='text-align:center;'>Lijngrafiek</h2>", unsafe_allow_html=True)
-
-        # Kleur- en lijnstijlopties voor sin(x)
-        sin_color_option = st.sidebar.selectbox("Kies een kleur voor sin(x)", ("blauw", "groen", "rood"))
-        sin_line_style = st.sidebar.selectbox("Kies een lijnstijl voor sin(x)", ("-", "--", "-.", ":"))
-
-        # Kleur- en lijnstijlopties voor cos(x)
-        cos_color_option = st.sidebar.selectbox("Kies een kleur voor cos(x)", ("blauw", "groen", "rood"))
-        cos_line_style = st.sidebar.selectbox("Kies een lijnstijl voor cos(x)", ("-", "--", "-.", ":"))
-        
-        # Koppel de Nederlandse termen aan matplotlib kleuren
-        color_mapping = {"blauw": "blue", "groen": "green", "rood": "red"}
-        
-        fig = plt.figure()
-        plt.plot(x, np.sin(x), color=color_mapping[sin_color_option], linestyle=sin_line_style, label='sin(x)')
-        plt.plot(x, np.cos(x), color=color_mapping[cos_color_option], linestyle=cos_line_style, label='cos(x)')
-        plt.legend()
+        fig, ax = plt.subplots()
+        ax.plot(x, np.sin(x), label="sin(x)")
+        ax.plot(x, np.cos(x), label="cos(x)")
+        ax.legend()
         st.pyplot(fig)
+        buf = download_plot(fig)
+        st.download_button("Download Lijngrafiek als PNG", buf, file_name="line_chart.png", mime="image/png")
+        logging.info("Lijngrafiek bekeken en gedownload.")
 
-    # Staafdiagram
     elif graph_options == "Staafdiagram":
         st.markdown("<h2 style='text-align:center;'>Staafdiagram</h2>", unsafe_allow_html=True)
-        fig = plt.figure()
-        plt.bar(bar_x, bar_x * 10)
-        plt.xlabel('Categorieën')
-        plt.ylabel('Waarden')
+        fig, ax = plt.subplots()
+        ax.bar(bar_x, bar_x * 10)
         st.pyplot(fig)
+        buf = download_plot(fig)
+        st.download_button("Download Staafdiagram als PNG", buf, file_name="bar_chart.png", mime="image/png")
+        logging.info("Staafdiagram bekeken en gedownload.")
 
-    # Horizontale Staafdiagram
     elif graph_options == "Horizontale Staafdiagram":
         st.markdown("<h2 style='text-align:center;'>Horizontale Staafdiagram</h2>", unsafe_allow_html=True)
-        fig = plt.figure()
-        plt.barh(bar_x, bar_x * 10)
-        plt.xlabel('Waarden')
-        plt.ylabel('Categorieën')
+        fig, ax = plt.subplots()
+        ax.barh(bar_x, bar_x * 10)
         st.pyplot(fig)
+        buf = download_plot(fig)
+        st.download_button("Download Horizontale Staafdiagram als PNG", buf, file_name="horizontal_bar_chart.png", mime="image/png")
+        logging.info("Horizontale Staafdiagram bekeken en gedownload.")
 
-    # 5. Scatterplot zonder filter, maar met Statistieken
     elif graph_options == "Scatterplot":
         st.markdown("<h2 style='text-align:center;'>Scatterplot</h2>", unsafe_allow_html=True)
-        
-        fig = plt.figure()
-        plt.scatter(scatter_x, scatter_y, c='blue', alpha=0.5)
-        plt.xlabel('X-as')
-        plt.ylabel('Y-as')
+        fig, ax = plt.subplots()
+        ax.scatter(scatter_x, scatter_y)
         st.pyplot(fig)
-
-        # Statistieken
-        st.write(f"Gemiddelde X: {np.mean(scatter_x):.2f}")
-        st.write(f"Gemiddelde Y: {np.mean(scatter_y):.2f}")
-        st.write(f"Standaarddeviatie X: {np.std(scatter_x):.2f}")
-        st.write(f"Standaarddeviatie Y: {np.std(scatter_y):.2f}")
+        buf = download_plot(fig)
+        st.download_button("Download Scatterplot als PNG", buf, file_name="scatter_plot.png", mime="image/png")
+        logging.info("Scatterplot bekeken en gedownload.")
 
 # Streamlit login scherm
 def login():
     st.title("Login")
-    
-    # Invoervelden voor gebruikersnaam en wachtwoord
+
     username = st.text_input("Gebruikersnaam")
     password = st.text_input("Wachtwoord", type="password")
-    
-    # Als de gebruiker op de 'Login' knop klikt
+
     if st.button("Login"):
         if verify_user(username, password):
-            st.session_state.logged_in = True  # Zet de status in de sessie naar ingelogd
+            st.session_state.logged_in = True
             st.success("Succesvol ingelogd!")
-            st.session_state.show_dashboard = True  # Toon het dashboard na inloggen
+            st.session_state.show_dashboard = True
+            logging.info(f"Gebruiker '{username}' succesvol ingelogd.")
         else:
-            st.error("Ongeldige inloggegevens. Probeer opnieuw.")
+            st.error("Ongeldige inloggegevens.")
+            logging.warning(f"Mislukte inlogpoging voor gebruiker '{username}'.")
 
 # Streamlit registratie scherm
 def register():
     st.title("Registreer")
-    
-    # Invoervelden voor nieuwe gebruikersnaam en wachtwoord
+
     new_username = st.text_input("Nieuwe gebruikersnaam")
     new_password = st.text_input("Nieuw wachtwoord", type="password")
-    
-    # Als de gebruiker op de 'Registreer' knop klikt
+
     if st.button("Registreer"):
         if create_user(new_username, new_password):
             st.success("Account succesvol aangemaakt!")
+            logging.info(f"Nieuwe gebruiker '{new_username}' geregistreerd.")
         else:
-            st.error("Gebruikersnaam bestaat al, kies een andere.")
+            st.error("Gebruikersnaam bestaat al.")
+            logging.warning(f"Registratie mislukt: gebruikersnaam '{new_username}' bestaat al.")
 
 # Hoofdtoepassing
 def main():
     if 'logged_in' not in st.session_state:
-        st.session_state.logged_in = False  # Initialiseer de ingelogde status
+        st.session_state.logged_in = False
     if 'show_dashboard' not in st.session_state:
-        st.session_state.show_dashboard = False  # Initialiseer de dashboard status
+        st.session_state.show_dashboard = False
 
     if st.session_state.logged_in and st.session_state.show_dashboard:
-        show_dashboard()  # Toon het dashboard na succesvolle login
+        show_dashboard()
+        if st.sidebar.button("Download alle grafieken als PDF"):
+            pdf_buf = generate_pdf()
+            st.download_button("Download PDF", pdf_buf, file_name="alle_grafieken.pdf", mime="application/pdf")
+            logging.info("PDF met alle grafieken gedownload.")
     else:
         st.sidebar.title("Navigatie")
         optie = st.sidebar.radio("Selecteer een optie", ("Login", "Registreer"))
-        
+
         if optie == "Login":
             login()
         elif optie == "Registreer":
