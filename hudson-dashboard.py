@@ -1,61 +1,9 @@
 import streamlit as st
-import bcrypt
-import json
-import os
+import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-import numpy as np
 from io import BytesIO
-import re
-
-# Function to load the user file
-def load_users():
-    if os.path.exists("users.json"):
-        with open("users.json", "r") as f:
-            return json.load(f)
-    else:
-        return {}
-
-# Function to verify the user
-def verify_user(username, password):
-    users = load_users()
-    if username in users:
-        hashed_password = users[username].encode('utf-8')
-        return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
-    else:
-        return False
-
-# Function to validate password strength
-def is_strong_password(password):
-    # Minimum 8 characters, 1 uppercase, 1 lowercase, 1 digit, and 1 special character
-    if len(password) < 8:
-        return False, "Password must be at least 8 characters long."
-    if not re.search(r"[A-Z]", password):
-        return False, "Password must contain at least 1 uppercase letter."
-    if not re.search(r"[a-z]", password):
-        return False, "Password must contain at least 1 lowercase letter."
-    if not re.search(r"\d", password):
-        return False, "Password must contain at least 1 digit."
-    if not re.search(r"[!@#\$%\^&\*]", password):
-        return False, "Password must contain at least 1 special character (!@#$%^&*)."
-    return True, "Password is strong."
-
-# Function to create a new account
-def create_user(username, password):
-    users = load_users()
-    if username in users:
-        return False, "User already exists"
-    
-    # Validate password strength
-    is_valid, message = is_strong_password(password)
-    if not is_valid:
-        return False, message
-    
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    users[username] = hashed_password.decode('utf-8')
-    
-    with open("users.json", "w") as f:
-        json.dump(users, f, indent=4)
+from auth import login, register  # Import the functions from auth.py
 
 # Function to convert graphs to PNG and download
 def download_plot(fig, filename="plot.png"):
@@ -80,19 +28,14 @@ def show_dashboard():
         options=("Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot")
     )
 
-    # 2. Customizable Line Chart for sin(x) and cos(x)
+    # Line Chart
     if graph_options == "Line Chart":
         st.markdown("<h2 style='text-align:center;'>Line Chart</h2>", unsafe_allow_html=True)
-
-        # Color and line style options for sin(x)
         sin_color_option = st.sidebar.selectbox("Choose a color for sin(x)", ("blue", "green", "red"))
         sin_line_style = st.sidebar.selectbox("Choose a line style for sin(x)", ("-", "--", "-.", ":"))
-
-        # Color and line style options for cos(x)
         cos_color_option = st.sidebar.selectbox("Choose a color for cos(x)", ("blue", "green", "red"))
         cos_line_style = st.sidebar.selectbox("Choose a line style for cos(x)", ("-", "--", "-.", ":"))
         
-        # Map English color terms to matplotlib colors
         color_mapping = {"blue": "blue", "green": "green", "red": "red"}
         
         fig_line_chart = plt.figure()
@@ -100,9 +43,6 @@ def show_dashboard():
         plt.plot(x, np.cos(x), color=color_mapping[cos_color_option], linestyle=cos_line_style, label='cos(x)')
         plt.legend()
         st.pyplot(fig_line_chart)
-
-        # Save the figure in session_state
-        st.session_state['fig_line_chart'] = fig_line_chart
 
         # Add a download button for the line chart
         buf_line_chart = download_plot(fig_line_chart)
@@ -117,9 +57,6 @@ def show_dashboard():
         plt.ylabel('Values')
         st.pyplot(fig_bar_chart)
 
-        # Save the figure in session_state
-        st.session_state['fig_bar_chart'] = fig_bar_chart
-
         # Add a download button for the bar chart
         buf_bar_chart = download_plot(fig_bar_chart)
         st.download_button("Download Bar Chart as PNG", buf_bar_chart, "bar_chart.png", "image/png")
@@ -132,9 +69,6 @@ def show_dashboard():
         plt.xlabel('Values')
         plt.ylabel('Categories')
         st.pyplot(fig_horizontal_bar_chart)
-
-        # Save the figure in session_state
-        st.session_state['fig_horizontal_bar_chart'] = fig_horizontal_bar_chart
 
         # Add a download button for the horizontal bar chart
         buf_horizontal_bar_chart = download_plot(fig_horizontal_bar_chart)
@@ -149,9 +83,6 @@ def show_dashboard():
         plt.ylabel('Y-axis')
         st.pyplot(fig_scatter_plot)
 
-        # Save the figure in session_state
-        st.session_state['fig_scatter_plot'] = fig_scatter_plot
-
         # Add a download button for the scatter plot
         buf_scatter_plot = download_plot(fig_scatter_plot)
         st.download_button("Download Scatter Plot as PNG", buf_scatter_plot, "scatter_plot.png", "image/png")
@@ -161,38 +92,6 @@ def show_dashboard():
         st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
         st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
         st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
-
-# Streamlit login screen
-def login():
-    st.title("Login")
-    
-    with st.form("login_form"):
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        submit_button = st.form_submit_button("Login")
-
-    if submit_button:
-        if verify_user(username, password):
-            st.session_state.logged_in = True
-            st.success(f"Welcome, {username}!")
-        else:
-            st.error("Invalid username or password")
-
-# User registration
-def register():
-    st.title("Register")
-    
-    with st.form("register_form"):
-        username = st.text_input("Choose a username")
-        password = st.text_input("Choose a password", type="password")
-        submit_button = st.form_submit_button("Create Account")
-
-    if submit_button:
-        success, message = create_user(username, password)
-        if success:
-            st.success(message)
-        else:
-            st.error(message)
 
 # Main application logic
 if __name__ == "__main__":
