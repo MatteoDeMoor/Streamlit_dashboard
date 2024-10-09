@@ -72,6 +72,7 @@ def show_dashboard():
     # Thema en kleurkeuze instellen met 5 basisopties
     st.sidebar.markdown("### Dashboard Thema")
     
+    # Kleurkeuze voor achtergrond en tekst
     background_color = st.sidebar.radio("Kies een achtergrondkleur", 
                                         options=["rood", "geel", "blauw", "groen", "oranje"])
     
@@ -87,9 +88,19 @@ def show_dashboard():
         "oranje": "#ffa500"
     }
 
-    # Toepassen van de gekozen kleuren
-    st.markdown(f"<style>body {{ background-color: {color_mapping[background_color]}; color: {color_mapping[text_color]}; }}</style>", unsafe_allow_html=True)
-    
+    # Toepassen van de gekozen kleuren via inline CSS
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-color: {color_mapping[background_color]};
+            color: {color_mapping[text_color]};
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     # Data voor de grafieken
     x = np.linspace(0, 10, 100)
     bar_x = np.array([1, 2, 3, 4, 5])
