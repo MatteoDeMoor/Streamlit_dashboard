@@ -69,11 +69,26 @@ def download_plot(fig, filename="plot.png"):
 def show_dashboard():
     st.markdown("<h1 style='text-align:center;'>Dashboard</h1>", unsafe_allow_html=True)
 
-    # Thema en kleurkeuze instellen
+    # Thema en kleurkeuze instellen met 5 basisopties
     st.sidebar.markdown("### Dashboard Thema")
-    background_color = st.sidebar.color_picker("Achtergrondkleur", "#ffffff")
-    text_color = st.sidebar.color_picker("Tekstkleur", "#000000")
-    st.markdown(f"<style>body {{ background-color: {background_color}; color: {text_color}; }}</style>", unsafe_allow_html=True)
+    
+    background_color = st.sidebar.radio("Kies een achtergrondkleur", 
+                                        options=["rood", "geel", "blauw", "groen", "oranje"])
+    
+    text_color = st.sidebar.radio("Kies een tekstkleur", 
+                                  options=["rood", "geel", "blauw", "groen", "oranje"])
+    
+    # Mapping voor kleuren
+    color_mapping = {
+        "rood": "#ff0000",
+        "geel": "#ffff00",
+        "blauw": "#0000ff",
+        "groen": "#00ff00",
+        "oranje": "#ffa500"
+    }
+
+    # Toepassen van de gekozen kleuren
+    st.markdown(f"<style>body {{ background-color: {color_mapping[background_color]}; color: {color_mapping[text_color]}; }}</style>", unsafe_allow_html=True)
     
     # Data voor de grafieken
     x = np.linspace(0, 10, 100)
