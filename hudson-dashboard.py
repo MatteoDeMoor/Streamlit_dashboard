@@ -6,10 +6,9 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import numpy as np
 from io import BytesIO
-import re  # Voor wachtwoordvalidatie
-import logging
+import re  # For password validation
 
-# Functie om het gebruikersbestand te laden
+# Function to load the user file
 def load_users():
     if os.path.exists("users.json"):
         with open("users.json", "r") as f:
@@ -17,7 +16,7 @@ def load_users():
     else:
         return {}
 
-# Functie om de gebruiker te verifiëren
+# Function to verify the user
 def verify_user(username, password):
     users = load_users()
     if username in users:
@@ -26,28 +25,28 @@ def verify_user(username, password):
     else:
         return False
 
-# Functie om de sterkte van het wachtwoord te valideren
+# Function to validate password strength
 def is_strong_password(password):
-    # Minimaal 8 tekens, 1 hoofdletter, 1 kleine letter, 1 cijfer en 1 speciaal teken
+    # Minimum 8 characters, 1 uppercase, 1 lowercase, 1 digit, and 1 special character
     if len(password) < 8:
-        return False, "Wachtwoord moet minimaal 8 tekens lang zijn."
+        return False, "Password must be at least 8 characters long."
     if not re.search(r"[A-Z]", password):
-        return False, "Wachtwoord moet minimaal 1 hoofdletter bevatten."
+        return False, "Password must contain at least 1 uppercase letter."
     if not re.search(r"[a-z]", password):
-        return False, "Wachtwoord moet minimaal 1 kleine letter bevatten."
+        return False, "Password must contain at least 1 lowercase letter."
     if not re.search(r"\d", password):
-        return False, "Wachtwoord moet minimaal 1 cijfer bevatten."
+        return False, "Password must contain at least 1 digit."
     if not re.search(r"[!@#\$%\^&\*]", password):
-        return False, "Wachtwoord moet minimaal 1 speciaal teken bevatten (!@#$%^&*)."
-    return True, "Wachtwoord is sterk."
+        return False, "Password must contain at least 1 special character (!@#$%^&*)."
+    return True, "Password is strong."
 
-# Functie om een nieuw account aan te maken
+# Function to create a new account
 def create_user(username, password):
     users = load_users()
     if username in users:
-        return False, "Gebruiker bestaat al"
+        return False, "User already exists"
     
-    # Controleer de sterkte van het wachtwoord
+    # Validate password strength
     is_valid, message = is_strong_password(password)
     if not is_valid:
         return False, message
@@ -58,43 +57,43 @@ def create_user(username, password):
     with open("users.json", "w") as f:
         json.dump(users, f, indent=4)
 
-# Functie om grafieken naar PNG te converteren en te downloaden
+# Function to convert graphs to PNG and download
 def download_plot(fig, filename="plot.png"):
     buf = BytesIO()
     fig.savefig(buf, format="png")
     buf.seek(0)
     return buf
 
-# Dashboard functie met grafieken
+# Dashboard function with graphs
 def show_dashboard():
     st.markdown("<h1 style='text-align:center;'>Dashboard</h1>", unsafe_allow_html=True)
 
-    # Data voor de grafieken
+    # Data for the graphs
     x = np.linspace(0, 10, 100)
     bar_x = np.array([1, 2, 3, 4, 5])
     scatter_x = np.random.rand(100)
     scatter_y = np.random.rand(100)
 
-    # Keuzemenu voor grafieken aan de linkerzijde
+    # Sidebar graph options
     graph_options = st.sidebar.radio(
-        "Kies een grafiek",
-        options=("Lijngrafiek", "Staafdiagram", "Horizontale Staafdiagram", "Scatterplot")
+        "Choose a graph",
+        options=("Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot")
     )
 
-    # 2. Aanpasbare Lijngrafiek voor sin(x) en cos(x)
-    if graph_options == "Lijngrafiek":
-        st.markdown("<h2 style='text-align:center;'>Lijngrafiek</h2>", unsafe_allow_html=True)
+    # 2. Customizable Line Chart for sin(x) and cos(x)
+    if graph_options == "Line Chart":
+        st.markdown("<h2 style='text-align:center;'>Line Chart</h2>", unsafe_allow_html=True)
 
-        # Kleur- en lijnstijlopties voor sin(x)
-        sin_color_option = st.sidebar.selectbox("Kies een kleur voor sin(x)", ("blauw", "groen", "rood"))
-        sin_line_style = st.sidebar.selectbox("Kies een lijnstijl voor sin(x)", ("-", "--", "-.", ":"))
+        # Color and line style options for sin(x)
+        sin_color_option = st.sidebar.selectbox("Choose a color for sin(x)", ("blue", "green", "red"))
+        sin_line_style = st.sidebar.selectbox("Choose a line style for sin(x)", ("-", "--", "-.", ":"))
 
-        # Kleur- en lijnstijlopties voor cos(x)
-        cos_color_option = st.sidebar.selectbox("Kies een kleur voor cos(x)", ("blauw", "groen", "rood"))
-        cos_line_style = st.sidebar.selectbox("Kies een lijnstijl voor cos(x)", ("-", "--", "-.", ":"))
+        # Color and line style options for cos(x)
+        cos_color_option = st.sidebar.selectbox("Choose a color for cos(x)", ("blue", "green", "red"))
+        cos_line_style = st.sidebar.selectbox("Choose a line style for cos(x)", ("-", "--", "-.", ":"))
         
-        # Koppel de Nederlandse termen aan matplotlib kleuren
-        color_mapping = {"blauw": "blue", "groen": "green", "rood": "red"}
+        # Map English color terms to matplotlib colors
+        color_mapping = {"blue": "blue", "green": "green", "red": "red"}
         
         fig_line_chart = plt.figure()
         plt.plot(x, np.sin(x), color=color_mapping[sin_color_option], linestyle=sin_line_style, label='sin(x)')
@@ -102,91 +101,91 @@ def show_dashboard():
         plt.legend()
         st.pyplot(fig_line_chart)
 
-        # Sla de figuur op in de session_state
+        # Save the figure in session_state
         st.session_state['fig_line_chart'] = fig_line_chart
 
-        # Voeg een download knop toe voor de lijngrafiek
+        # Add a download button for the line chart
         buf_line_chart = download_plot(fig_line_chart)
-        st.download_button("Download Lijngrafiek als PNG", buf_line_chart, "lijngrafiek.png", "image/png")
+        st.download_button("Download Line Chart as PNG", buf_line_chart, "line_chart.png", "image/png")
 
-    # Staafdiagram
-    elif graph_options == "Staafdiagram":
-        st.markdown("<h2 style='text-align:center;'>Staafdiagram</h2>", unsafe_allow_html=True)
+    # Bar Chart
+    elif graph_options == "Bar Chart":
+        st.markdown("<h2 style='text-align:center;'>Bar Chart</h2>", unsafe_allow_html=True)
         fig_bar_chart = plt.figure()
         plt.bar(bar_x, bar_x * 10)
-        plt.xlabel('Categorieën')
-        plt.ylabel('Waarden')
+        plt.xlabel('Categories')
+        plt.ylabel('Values')
         st.pyplot(fig_bar_chart)
 
-        # Sla de figuur op in de session_state
+        # Save the figure in session_state
         st.session_state['fig_bar_chart'] = fig_bar_chart
 
-        # Voeg een download knop toe voor de staafdiagram
+        # Add a download button for the bar chart
         buf_bar_chart = download_plot(fig_bar_chart)
-        st.download_button("Download Staafdiagram als PNG", buf_bar_chart, "staafdiagram.png", "image/png")
+        st.download_button("Download Bar Chart as PNG", buf_bar_chart, "bar_chart.png", "image/png")
 
-    # Horizontale Staafdiagram
-    elif graph_options == "Horizontale Staafdiagram":
-        st.markdown("<h2 style='text-align:center;'>Horizontale Staafdiagram</h2>", unsafe_allow_html=True)
+    # Horizontal Bar Chart
+    elif graph_options == "Horizontal Bar Chart":
+        st.markdown("<h2 style='text-align:center;'>Horizontal Bar Chart</h2>", unsafe_allow_html=True)
         fig_horizontal_bar_chart = plt.figure()
         plt.barh(bar_x, bar_x * 10)
-        plt.xlabel('Waarden')
-        plt.ylabel('Categorieën')
+        plt.xlabel('Values')
+        plt.ylabel('Categories')
         st.pyplot(fig_horizontal_bar_chart)
 
-        # Sla de figuur op in de session_state
+        # Save the figure in session_state
         st.session_state['fig_horizontal_bar_chart'] = fig_horizontal_bar_chart
 
-        # Voeg een download knop toe voor de horizontale staafdiagram
+        # Add a download button for the horizontal bar chart
         buf_horizontal_bar_chart = download_plot(fig_horizontal_bar_chart)
-        st.download_button("Download Horizontale Staafdiagram als PNG", buf_horizontal_bar_chart, "horizontale_staafdiagram.png", "image/png")
+        st.download_button("Download Horizontal Bar Chart as PNG", buf_horizontal_bar_chart, "horizontal_bar_chart.png", "image/png")
 
-    # Scatterplot
-    elif graph_options == "Scatterplot":
-        st.markdown("<h2 style='text-align:center;'>Scatterplot</h2>", unsafe_allow_html=True)
+    # Scatter Plot
+    elif graph_options == "Scatter Plot":
+        st.markdown("<h2 style='text-align:center;'>Scatter Plot</h2>", unsafe_allow_html=True)
         fig_scatter_plot = plt.figure()
         plt.scatter(scatter_x, scatter_y, c='blue', alpha=0.5)
-        plt.xlabel('X-as')
-        plt.ylabel('Y-as')
+        plt.xlabel('X-axis')
+        plt.ylabel('Y-axis')
         st.pyplot(fig_scatter_plot)
 
-        # Sla de figuur op in de session_state
+        # Save the figure in session_state
         st.session_state['fig_scatter_plot'] = fig_scatter_plot
 
-        # Voeg een download knop toe voor de scatterplot
+        # Add a download button for the scatter plot
         buf_scatter_plot = download_plot(fig_scatter_plot)
-        st.download_button("Download Scatterplot als PNG", buf_scatter_plot, "scatterplot.png", "image/png")
+        st.download_button("Download Scatter Plot as PNG", buf_scatter_plot, "scatter_plot.png", "image/png")
 
-        # Statistieken
-        st.write(f"Gemiddelde X: {np.mean(scatter_x):.2f}")
-        st.write(f"Gemiddelde Y: {np.mean(scatter_y):.2f}")
-        st.write(f"Standaarddeviatie X: {np.std(scatter_x):.2f}")
-        st.write(f"Standaarddeviatie Y: {np.std(scatter_y):.2f}")
+        # Statistics
+        st.write(f"Mean X: {np.mean(scatter_x):.2f}")
+        st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
+        st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
+        st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
 
-# Streamlit login scherm
+# Streamlit login screen
 def login():
     st.title("Login")
     
     with st.form("login_form"):
-        username = st.text_input("Gebruikersnaam")
-        password = st.text_input("Wachtwoord", type="password")
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
         submit_button = st.form_submit_button("Login")
 
     if submit_button:
         if verify_user(username, password):
             st.session_state.logged_in = True
-            st.success(f"Welkom, {username}!")
+            st.success(f"Welcome, {username}!")
         else:
-            st.error("Ongeldige gebruikersnaam of wachtwoord")
+            st.error("Invalid username or password")
 
-# Gebruikersregistratie
+# User registration
 def register():
-    st.title("Registreren")
+    st.title("Register")
     
     with st.form("register_form"):
-        username = st.text_input("Kies een gebruikersnaam")
-        password = st.text_input("Kies een wachtwoord", type="password")
-        submit_button = st.form_submit_button("Account aanmaken")
+        username = st.text_input("Choose a username")
+        password = st.text_input("Choose a password", type="password")
+        submit_button = st.form_submit_button("Create Account")
 
     if submit_button:
         success, message = create_user(username, password)
@@ -195,7 +194,7 @@ def register():
         else:
             st.error(message)
 
-# Main applicatie logica
+# Main application logic
 if __name__ == "__main__":
     if 'logged_in' not in st.session_state:
         st.session_state.logged_in = False
@@ -203,7 +202,7 @@ if __name__ == "__main__":
     if st.session_state.logged_in:
         show_dashboard()
     else:
-        page = st.sidebar.selectbox("Kies een pagina", ["Login", "Registreren"])
+        page = st.sidebar.selectbox("Choose a page", ["Login", "Register"])
         
         if page == "Login":
             login()
