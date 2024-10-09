@@ -7,15 +7,6 @@ from matplotlib import pyplot as plt
 import numpy as np
 from io import BytesIO
 import re
-import logging
-
-# Configure logging
-logging.basicConfig(
-    filename='app.log',  # Logbestand
-    level=logging.INFO,   # Logniveau
-    format='%(asctime)s - %(levelname)s - %(message)s'  # Logformaat
-)
-
 
 # Function to load the user file
 def load_users():
@@ -23,7 +14,6 @@ def load_users():
         with open("users.json", "r") as f:
             return json.load(f)
     else:
-        logging.warning("User file not found.")
         return {}
 
 # Function to verify the user
@@ -31,14 +21,8 @@ def verify_user(username, password):
     users = load_users()
     if username in users:
         hashed_password = users[username].encode('utf-8')
-        if bcrypt.checkpw(password.encode('utf-8'), hashed_password):
-            logging.info(f"User '{username}' logged in successfully.")
-            return True
-        else:
-            logging.error(f"Failed login attempt for user '{username}'. Incorrect password.")
-            return False
+        return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
     else:
-        logging.error(f"Failed login attempt for non-existent user '{username}'.")
         return False
 
 # Function to validate password strength
@@ -60,13 +44,11 @@ def is_strong_password(password):
 def create_user(username, password):
     users = load_users()
     if username in users:
-        logging.warning(f"Attempt to create user '{username}' failed: User already exists.")
         return False, "User already exists"
     
     # Validate password strength
     is_valid, message = is_strong_password(password)
     if not is_valid:
-        logging.warning(f"Attempt to create user '{username}' failed: {message}")
         return False, message
     
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -74,7 +56,6 @@ def create_user(username, password):
     
     with open("users.json", "w") as f:
         json.dump(users, f, indent=4)
-    logging.info(f"User '{username}' created successfully.")
 
 # Function to convert graphs to PNG and download
 def download_plot(fig, filename="plot.png"):
