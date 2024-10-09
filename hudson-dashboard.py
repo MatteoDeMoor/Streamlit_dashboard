@@ -146,15 +146,16 @@ def show_dashboard():
         st.write(f"Gemiddelde Y: {np.mean(scatter_y):.2f}")
         st.write(f"Standaarddeviatie X: {np.std(scatter_x):.2f}")
         st.write(f"Standaarddeviatie Y: {np.std(scatter_y):.2f}")
-
 # Streamlit login scherm
 def login():
     st.title("Login")
+    
+    with st.form("login_form"):
+        username = st.text_input("Gebruikersnaam")
+        password = st.text_input("Wachtwoord", type="password")
+        submit_button = st.form_submit_button("Login")
 
-    username = st.text_input("Gebruikersnaam")
-    password = st.text_input("Wachtwoord", type="password")
-
-    if st.button("Login"):
+    if submit_button:
         if verify_user(username, password):
             st.session_state.logged_in = True
             st.success("Succesvol ingelogd!")
@@ -164,20 +165,24 @@ def login():
             st.error("Ongeldige inloggegevens.")
             logging.warning(f"Mislukte inlogpoging voor gebruiker '{username}'.")
 
+
 # Streamlit registratie scherm
 def register():
     st.title("Registreer")
+    
+    with st.form("register_form"):
+        new_username = st.text_input("Nieuwe gebruikersnaam")
+        new_password = st.text_input("Nieuw wachtwoord", type="password")
+        submit_button = st.form_submit_button("Registreer")
 
-    new_username = st.text_input("Nieuwe gebruikersnaam")
-    new_password = st.text_input("Nieuw wachtwoord", type="password")
-
-    if st.button("Registreer"):
+    if submit_button:
         if create_user(new_username, new_password):
             st.success("Account succesvol aangemaakt!")
             logging.info(f"Nieuwe gebruiker '{new_username}' geregistreerd.")
         else:
             st.error("Gebruikersnaam bestaat al.")
             logging.warning(f"Registratie mislukt: gebruikersnaam '{new_username}' bestaat al.")
+
 
 # Hoofdtoepassing
 def main():
