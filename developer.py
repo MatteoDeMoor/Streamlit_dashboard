@@ -10,9 +10,9 @@ def download_plot(fig, filename="plot.png"):
     buf.seek(0)
     return buf
 
-# Analyst dashboard function with graphs
-def show_analyst_dashboard():
-    st.markdown("<h1 style='text-align:center;'>Analyst Dashboard</h1>", unsafe_allow_html=True)
+# Developer dashboard function with graphs
+def show_developer_dashboard():
+    st.markdown("<h1 style='text-align:center;'>Developer Dashboard</h1>", unsafe_allow_html=True)
 
     # Data for the graphs
     x = np.linspace(0, 10, 100)
@@ -21,8 +21,8 @@ def show_analyst_dashboard():
     scatter_y = np.random.rand(100)
 
     # Sidebar graph options
-    if 'graph_option' not in st.session_state:
-        st.session_state.graph_option = "Line Chart"
+    if 'dev_graph_option' not in st.session_state:
+        st.session_state.dev_graph_option = "Line Chart"
 
     st.sidebar.markdown("## Choose a graph")
     graph_options = st.sidebar.selectbox(
@@ -97,11 +97,11 @@ def show_analyst_dashboard():
             st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
             st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
 
-    # Button to switch to the Developer Dashboard
+    # Navigation to Analyst Dashboard - Sidebar Bottom Section
     st.sidebar.markdown("<hr>", unsafe_allow_html=True)
-    st.sidebar.markdown("<h3 style='text-align:left;'>Want to switch to the Developer Dashboard?</h3>", unsafe_allow_html=True)
-    if st.sidebar.button("Go to Developer Dashboard"):
-        st.session_state.page = 'developer'
+    st.sidebar.markdown("<h3 style='text-align:left;'>Want to switch to the Analyst Dashboard?</h3>", unsafe_allow_html=True)
+    if st.sidebar.button("Go to Analyst Dashboard"):
+        st.session_state.page = 'analyst'
         st.rerun()
 
     # Button to go to the Login Page
