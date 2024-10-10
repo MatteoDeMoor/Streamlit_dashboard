@@ -36,7 +36,7 @@ def show_developer_dashboard():
     with st.container():
         # Line Chart
         if graph_options == "Line Chart":
-            st.markdown("<h2 style='text-align:left;'>Line Chart</h2>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align:center;'>Line Chart</h2>", unsafe_allow_html=True)
             fig_line_chart = plt.figure()
             plt.plot(x, np.sin(x), color='blue', label='sin(x)')
             plt.plot(x, np.cos(x), color='green', label='cos(x)')
@@ -94,6 +94,6 @@ def show_developer_dashboard():
 
     # Navigation to Analyst Dashboard - Sidebar Bottom Section
     st.sidebar.markdown("<hr>", unsafe_allow_html=True)
-    st.sidebar.markdown("<h3 style='text-align:center;'>Want to switch to the Analyst Dashboard?</h3>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h3 style='text-align:left;'>Want to switch to the Analyst Dashboard?</h3>", unsafe_allow_html=True)
     if st.sidebar.button("Go to Analyst Dashboard"):
         st.session_state.page = 'analyst'
