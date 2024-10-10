@@ -22,5 +22,5 @@ if 'page' in st.session_state:
         from analyst import show_analyst_dashboard
         show_analyst_dashboard()
     elif st.session_state.page == "developer":
-        from developer import show_developer_dashboard  # Assuming you have this file
+        from developer import show_developer_dashboard
         show_developer_dashboard()
