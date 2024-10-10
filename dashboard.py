@@ -6,7 +6,7 @@ def show_dashboard():
     # Create columns for layout to center content
     col1, col2, col3 = st.columns([1, 2, 1])  # Adjust these ratios to control the layout
 
-    # Load and display the logo in the upper left corner
+    # Load and display the logo in the upper left corner (still in col1 for symmetry)
     with col1:
         img = Image.open("images/logo-hudson.png")
         st.image(img, width=100)
@@ -33,21 +33,15 @@ def show_dashboard():
         # Add the login button also in the middle
         with select_col2:
             if st.button("Login", use_container_width=True):
-                # Update the session state on first click
-                st.session_state.page = role.lower()  # Set page to either 'analyst' or 'developer'
+                if role == "Analyst":
+                    st.session_state.page = "analyst"
+                elif role == "Developer":
+                    st.session_state.page = "developer"
 
     # Right column remains empty to keep symmetry
     with col3:
         st.empty()
 
-# Check if a page is already set and redirect accordingly
-if 'page' in st.session_state:
-    if st.session_state.page == 'analyst':
-        from analyst import show_analyst_dashboard
-        show_analyst_dashboard()
-    elif st.session_state.page == 'developer':
-        from developer import show_developer_dashboard
-        show_developer_dashboard()
-else:
-    # Show the dashboard if no page is set
+# Ensure this function runs only when needed
+if __name__ == "__main__":
     show_dashboard()
