@@ -1,5 +1,5 @@
 bcrypt
 matplotlib
-sshtunnel
-os
-dotenv
+//sshtunnel
+//os
+//dotenv
