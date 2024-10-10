@@ -1,6 +1,6 @@
 import streamlit as st
 from PIL import Image
-
+    
 # Function to show the first screen (role selection)
 def show_dashboard():
     # Create columns for layout to center content
@@ -8,16 +8,17 @@ def show_dashboard():
 
     # Load and display the logo in the upper left corner (still in col1 for symmetry)
     with col1:
-        img = Image.open("images/logo-hudson.png")
+        img = Image.open("assets/images/logo-hudson.png")
         st.image(img, width=100)
+
     hide_img_fs = '''
     <style>
     button[title="View fullscreen"]{
         visibility: hidden;}
     </style>
     '''
-
     st.markdown(hide_img_fs, unsafe_allow_html=True)
+
     # Center the title in the middle column
     with col2:
         st.markdown("<h1 style='text-align: center;'>Hudson Dashboard</h1>", unsafe_allow_html=True)

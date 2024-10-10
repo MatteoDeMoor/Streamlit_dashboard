@@ -4,7 +4,7 @@ from analyst import show_analyst_dashboard
 from developer import show_developer_dashboard
 
 # Set the page title and layout
-st.set_page_config(page_title="Hudson Dashboard", layout="wide", page_icon="images/logo--light.png")
+st.set_page_config(page_title="Hudson Dashboard", layout="wide", page_icon="assets/images/logo--light.png")
 st.get_option("theme.primaryColor")
 # Manage session state for page navigation
 if 'page' not in st.session_state:
