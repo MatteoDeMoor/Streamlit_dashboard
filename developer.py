@@ -36,7 +36,7 @@ def show_developer_dashboard():
     with st.container():
         # Line Chart
         if graph_options == "Line Chart":
-            st.markdown("<h2 style='text-align:center;'>Line Chart</h2>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align:left;'>Line Chart</h2>", unsafe_allow_html=True)
             fig_line_chart = plt.figure()
             plt.plot(x, np.sin(x), color='blue', label='sin(x)')
             plt.plot(x, np.cos(x), color='green', label='cos(x)')
