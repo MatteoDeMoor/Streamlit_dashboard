@@ -1,18 +1,13 @@
 import streamlit as st
-from PIL import Image
 
 # Set the page title and layout
 st.set_page_config(page_title="Hudson Dashboard", layout="centered")
 
-# Load the favicon
-favicon_path = "./images/logo-hudson.png"  # Make sure the file name matches
-favicon_image = Image.open(favicon_path)
-
-# Set the favicon using the image
-st.image(favicon_image, width=16)  # Width can be adjusted if needed
-
 # Title
 st.title("Hudson Dashboard")
+
+# Display the logo
+st.image("./images/logo-hudson--white.png", use_column_width=True)
 
 # Role selection
 role = st.selectbox("Select your role", ("Analyst", "Developer"))
