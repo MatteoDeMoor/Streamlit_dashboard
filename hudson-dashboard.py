@@ -4,10 +4,24 @@ from developer import show_developer_dashboard  # Import the function from devel
 
 # Main application logic
 if __name__ == "__main__":
-    # Role selection
-    role = st.sidebar.selectbox("Choose your role", ["Analyst", "Developer"])
+    st.markdown("<h1 style='text-align:center;'>Hudson Dashboard</h1>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align:center;'>Choose Your Role</h2>", unsafe_allow_html=True)
 
-    if role == "Analyst":
-        show_analyst_dashboard()
-    elif role == "Developer":
-        show_developer_dashboard()
+    # Role selection
+    role = st.selectbox(
+        "Select your role:",
+        options=["Select a Role", "Analyst", "Developer"],
+        index=0
+    )
+
+    if role != "Select a Role":
+        st.session_state.selected_role = role  # Store the selected role
+
+        # Display a login button
+        if st.button("Login"):
+            if role == "Analyst":
+                show_analyst_dashboard()
+            elif role == "Developer":
+                show_developer_dashboard()
+    else:
+        st.info("Please select a role to proceed.")
