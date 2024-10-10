@@ -1,17 +1,25 @@
 import streamlit as st
 from PIL import Image
-# Set the page title and layout
+from developer import show_developer_dashboard
+from analyst import show_analyst_dashboard
 
-im = Image.open("images/hudson_logo.png")
 # Set the page title and layout
-st.set_page_config(page_title="Hudson Dashboard", layout="centered",page_icon=im)
+st.set_page_config(page_title="Hudson Dashboard", layout="wide", page_icon="images/logo--light.png")
 
-# Title
-# Load and process the image
-img = Image.open("assets/hudson_logo.png")
-img = img.resize((400, 300))  # Example resizing
-st.image(img, use_column_width=True)
-st.title("Hudson Dashboard")
+# Create columns for layout
+col1, col2 = st.columns([1, 3])  # Adjust ratios if necessary
+
+# Load and display the logo in the upper left corner
+with col1:
+    img = Image.open("images/logo-hudson.png")
+    st.image(img, width=100)  # Set a fixed width for the logo (adjust as necessary)
+
+# Center the title in the second column
+with col2:
+    st.markdown(
+        "<h1 style='text-align: center;'>Hudson Dashboard</h1>",
+        unsafe_allow_html=True
+    )
 
 # Role selection
 role = st.selectbox("Select your role", ("Analyst", "Developer"))
@@ -26,8 +34,6 @@ if st.button("Login"):
 # Show the selected page
 if 'page' in st.session_state:
     if st.session_state.page == "analyst":
-        from analyst import show_analyst_dashboard
         show_analyst_dashboard()
     elif st.session_state.page == "developer":
-        from developer import show_developer_dashboard
         show_developer_dashboard()
