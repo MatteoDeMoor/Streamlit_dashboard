@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "Moneta";
+  src: url("fonts/Moneta-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: "Moneta", sans-serif !important  ;
+  font-weight: 300;
+}
