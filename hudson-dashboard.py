@@ -22,18 +22,21 @@ with col2:
     )
 
 # Role selection
-role = st.selectbox("Select your role", ("Analyst", "Developer"))
+if 'page' not in st.session_state:
+    st.session_state.page = 'role_selection'
 
-# Navigation button
-if st.button("Login"):
-    if role == "Analyst":
-        st.session_state.page = "analyst"
-    elif role == "Developer":
-        st.session_state.page = "developer"
+if st.session_state.page == 'role_selection':
+    role = st.selectbox("Select your role", ("Analyst", "Developer"))
+
+    # Navigation button
+    if st.button("Login"):
+        if role == "Analyst":
+            st.session_state.page = "analyst"
+        elif role == "Developer":
+            st.session_state.page = "developer"
 
 # Show the selected page
-if 'page' in st.session_state:
-    if st.session_state.page == "analyst":
-        show_analyst_dashboard()
-    elif st.session_state.page == "developer":
-        show_developer_dashboard()
+if st.session_state.page == "analyst":
+    show_analyst_dashboard()
+elif st.session_state.page == "developer":
+    show_developer_dashboard()
