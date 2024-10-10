@@ -55,22 +55,6 @@ def create_user(username, password):
     
     return True, "User created successfully."
 
-# Streamlit login screen
-def login():
-    st.title("Login")
-    
-    with st.form("login_form"):
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        submit_button = st.form_submit_button("Login")
-
-    if submit_button:
-        if verify_user(username, password):
-            st.session_state.logged_in = True
-            st.success(f"Welcome, {username}!")
-        else:
-            st.error("Invalid username or password")
-
 # User registration
 def register():
     st.title("Register")
@@ -81,10 +65,17 @@ def register():
         submit_button = st.form_submit_button("Create Account")
 
     if submit_button:
-        st.write(f"Username entered: {username}")  # Debug log
+        # Ensure that username and password are not empty
+        if not username or not password:
+            st.error("Username and password cannot be empty.")
+            return
+        
         success, message = create_user(username, password)
-        st.write(f"Create user result: {success}, message: {message}")  # Debug log
         if success:
             st.success(message)
         else:
             st.error(message)
+
+# Start the application
+if __name__ == "__main__":
+    register()
