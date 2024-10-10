@@ -85,3 +85,7 @@ def show_analyst_dashboard():
             st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
             st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
             st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
+
+    # Option to navigate back to role selection
+    if st.button("Back to Role Selection"):
+        st.session_state.page = 'role_selection'
