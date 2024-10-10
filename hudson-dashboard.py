@@ -5,7 +5,7 @@ from developer import show_developer_dashboard
 
 # Set the page title and layout
 st.set_page_config(page_title="Hudson Dashboard", layout="wide", page_icon="images/logo--light.png")
-
+st.get_option("theme.primaryColor")
 # Manage session state for page navigation
 if 'page' not in st.session_state:
     st.session_state.page = 'role_selection'

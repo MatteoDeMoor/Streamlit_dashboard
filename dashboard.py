@@ -10,7 +10,14 @@ def show_dashboard():
     with col1:
         img = Image.open("images/logo-hudson.png")
         st.image(img, width=100)
+    hide_img_fs = '''
+    <style>
+    button[title="View fullscreen"]{
+        visibility: hidden;}
+    </style>
+    '''
 
+    st.markdown(hide_img_fs, unsafe_allow_html=True)
     # Center the title in the middle column
     with col2:
         st.markdown("<h1 style='text-align: center;'>Hudson Dashboard</h1>", unsafe_allow_html=True)

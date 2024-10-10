@@ -97,3 +97,5 @@ def show_analyst_dashboard():
     st.sidebar.markdown("<h3 style='text-align:left;'>Want to switch to the Developer Dashboard?</h3>", unsafe_allow_html=True)
     if st.sidebar.button("Go to Developer Dashboard"):
         st.session_state.page = 'developer'
+        st.rerun()
+
