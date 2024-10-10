@@ -6,9 +6,6 @@ st.set_page_config(page_title="Hudson Dashboard", layout="centered")
 # Title
 st.title("Hudson Dashboard")
 
-# Display the logo
-st.image("./images/logo-hudson--white.png", use_column_width=True)
-
 # Role selection
 role = st.selectbox("Select your role", ("Analyst", "Developer"))
 
