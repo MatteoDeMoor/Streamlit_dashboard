@@ -92,7 +92,8 @@ def show_developer_dashboard():
             st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
             st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
 
-    # Role navigation button (place at the bottom)
-    with st.container():
-        if st.button("Go to Analyst Dashboard"):
-            st.session_state.page = 'analyst'
+    # Navigation to Analyst Dashboard - Bottom Section (Nav Bar)
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align:center;'>Want to switch to the Analyst Dashboard?</h3>", unsafe_allow_html=True)
+    if st.button("Go to Analyst Dashboard"):
+        st.session_state.page = 'analyst'
