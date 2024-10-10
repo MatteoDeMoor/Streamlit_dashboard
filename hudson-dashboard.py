@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Set the page title and layout
-st.set_page_config(page_title="Hudson Dashboard", layout="centered")
+st.set_page_config(page_title="Hudson Dashboard", layout="centered",page_icon= "https://www.hudsonsolutions.com/assets/corporate/images/logo--light.svg")
 
 # Title
 st.title("Hudson Dashboard")
