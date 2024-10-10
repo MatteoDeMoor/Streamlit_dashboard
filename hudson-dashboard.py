@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 # Set the page title and layout
 
-im = Image.open("images/logo--light.png")
+im = Image.open("./images/hudson_logo.png")
 # Set the page title and layout
 st.set_page_config(page_title="Hudson Dashboard", layout="centered",page_icon=im)
 
