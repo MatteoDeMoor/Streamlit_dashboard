@@ -25,7 +25,7 @@ def show_analyst_dashboard():
         st.session_state.graph_option = "Line Chart"
 
     st.sidebar.markdown("## Choose a graph")
-    graph_options = st.sidebar.radio(
+    graph_options = st.sidebar.selectbox(
         "Select a graph:",
         options=("Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot"),
         index=["Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot"].index(st.session_state.graph_option)
@@ -98,4 +98,3 @@ def show_analyst_dashboard():
     if st.sidebar.button("Go to Developer Dashboard"):
         st.session_state.page = 'developer'
         st.rerun()
-
