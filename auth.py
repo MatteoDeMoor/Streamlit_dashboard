@@ -12,18 +12,8 @@ def load_users():
     else:
         return {}
 
-# Function to verify the user
-def verify_user(username, password):
-    users = load_users()
-    if username in users:
-        hashed_password = users[username].encode('utf-8')
-        return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
-    else:
-        return False
-
 # Function to validate password strength
 def is_strong_password(password):
-    # Minimum 8 characters, 1 uppercase, 1 lowercase, 1 digit, and 1 special character
     if len(password) < 8:
         return False, "Password must be at least 8 characters long."
     if not re.search(r"[A-Z]", password):
@@ -42,7 +32,6 @@ def create_user(username, password):
     if username in users:
         return False, "User already exists"
     
-    # Validate password strength
     is_valid, message = is_strong_password(password)
     if not is_valid:
         return False, message
@@ -59,13 +48,12 @@ def create_user(username, password):
 def register():
     st.title("Register")
     
-    with st.form("register_form"):
-        username = st.text_input("Choose a username")
-        password = st.text_input("Choose a password", type="password")
-        submit_button = st.form_submit_button("Create Account")
+    username = st.text_input("Choose a username")
+    password = st.text_input("Choose a password", type="password")
+    submit_button = st.button("Create Account")
 
     if submit_button:
-        # Ensure that username and password are not empty
+        # Check for empty fields
         if not username or not password:
             st.error("Username and password cannot be empty.")
             return
