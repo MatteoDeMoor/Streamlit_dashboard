@@ -35,8 +35,11 @@ def show_dashboard():
             if st.button("Login", use_container_width=True):
                 if role == "Analyst":
                     st.session_state.page = "analyst"
+                    st.rerun()
+
                 elif role == "Developer":
                     st.session_state.page = "developer"
+                    st.rerun()
 
     # Right column remains empty to keep symmetry
     with col3:
