@@ -21,10 +21,16 @@ def show_developer_dashboard():
     scatter_y = np.random.rand(100)
 
     # Sidebar graph options
+    if 'dev_graph_option' not in st.session_state:
+        st.session_state.dev_graph_option = "Line Chart"
+
+    st.sidebar.markdown("## Choose a graph")
     graph_options = st.sidebar.radio(
-        "Choose a graph",
-        options=("Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot")
+        "Select a graph:",
+        options=("Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot"),
+        index=["Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot"].index(st.session_state.dev_graph_option)
     )
+    st.session_state.dev_graph_option = graph_options  # Update session state
 
     # Use a container
     with st.container():
