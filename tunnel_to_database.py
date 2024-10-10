@@ -1,21 +1,22 @@
-import paramiko
 import pyodbc
 from sshtunnel import SSHTunnelForwarder
+import os
+from dotenv import load_dotenv
 
-# Define SSH connection parameters
-ssh_hostname = 'vichogent.be'
-ssh_port = 40239
-ssh_username = 'vicuser'
-ssh_password = 'NouRobTomJarMat5'
+# Load environment variables from .env file
+load_dotenv()
 
-# Define MS SQL connection parameters
-sql_hostname = '127.0.0.1'  # Localhost since we will use port forwarding
-sql_port = 1433  # Default SQL Server port
-sql_database = 'CandidateAssessmentDB'  # Replace with your database name
-sql_username = 'DEP2_G05'  # SQL Server username
-sql_password = 'NouRobTomJarMat5'  # SQL Server password
+# Now retrieve the variables
+ssh_hostname = os.getenv('SSH_HOSTNAME')
+ssh_port = int(os.getenv('SSH_PORT'))
+ssh_username = os.getenv('SSH_USERNAME')
+ssh_password = os.getenv('SSH_PASSWORD')
+sql_hostname = os.getenv('SQL_HOSTNAME')
+sql_port = int(os.getenv('SQL_PORT'))
+sql_database = os.getenv('SQL_DATABASE')
+sql_username = os.getenv('SQL_USERNAME')
+sql_password = os.getenv('SQL_PASSWORD')
 
-# Global variable for the SSH tunnel
 tunnel = None
 
 def open_ssh_tunnel():
