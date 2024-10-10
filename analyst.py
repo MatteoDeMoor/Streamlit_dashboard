@@ -28,9 +28,14 @@ def show_analyst_dashboard():
     graph_options = st.sidebar.selectbox(
         "Select a graph:",
         options=("Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot"),
-        index=["Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot"].index(st.session_state.graph_option)
+        index=["Line Chart", "Bar Chart", "Horizontal Bar Chart", "Scatter Plot"].index(st.session_state.graph_option),
+        key='graph_dropdown'
     )
-    st.session_state.graph_option = graph_options  # Update session state
+    
+    # Check if the graph option has changed, rerun the app if needed
+    if st.session_state.graph_option != graph_options:
+        st.session_state.graph_option = graph_options
+        st.rerun()
 
     # Use a container
     with st.container():
