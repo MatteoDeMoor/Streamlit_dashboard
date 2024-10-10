@@ -7,7 +7,10 @@ im = Image.open("images/hudson_logo.png")
 st.set_page_config(page_title="Hudson Dashboard", layout="centered",page_icon=im)
 
 # Title
-st.image("assets/logo-hudson.png", width=400)  # Set width to 400 pixels
+# Load and process the image
+img = Image.open("assets/hudson_logo.png")
+img = img.resize((400, 300))  # Example resizing
+st.image(img, use_column_width=True)
 st.title("Hudson Dashboard")
 
 # Role selection
