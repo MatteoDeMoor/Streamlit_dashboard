@@ -52,6 +52,8 @@ def create_user(username, password):
     
     with open("users.json", "w") as f:
         json.dump(users, f, indent=4)
+    
+    return True, "User created successfully."
 
 # Streamlit login screen
 def login():
@@ -79,7 +81,9 @@ def register():
         submit_button = st.form_submit_button("Create Account")
 
     if submit_button:
+        st.write(f"Username entered: {username}")  # Debug log
         success, message = create_user(username, password)
+        st.write(f"Create user result: {success}, message: {message}")  # Debug log
         if success:
             st.success(message)
         else:
