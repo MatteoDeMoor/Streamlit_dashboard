@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Moneta";
-  src: url("fonts/Moneta-Bold.ttf") format("truetype");
+  src: url("fonts/Moneta-Bold.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
