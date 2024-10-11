@@ -8,6 +8,7 @@ st.set_page_config(page_title="Hudson Dashboard", layout="wide", page_icon="asse
 print(st.get_option("theme.primaryColor"))
 with open( "style.css" ) as css:
     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
+    
 # Manage session state for page navigation
 if 'page' not in st.session_state:
     st.session_state.page = 'role_selection'
