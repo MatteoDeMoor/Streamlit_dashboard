@@ -21,8 +21,8 @@ def show_developer_dashboard():
     scatter_y = np.random.rand(100)
 
     # Sidebar graph options
-    if 'dev_graph_option' not in st.session_state:
-        st.session_state.dev_graph_option = "Line Chart"
+    if 'graph_option' not in st.session_state:
+        st.session_state.graph_option = "Line Chart"
 
     st.sidebar.markdown("## Choose a graph")
     graph_options = st.sidebar.selectbox(
