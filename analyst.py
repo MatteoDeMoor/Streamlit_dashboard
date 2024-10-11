@@ -10,15 +10,27 @@ def download_plot(fig, filename="plot.png"):
     buf.seek(0)
     return buf
 
-# Analyst dashboard function with graphs
-def show_analyst_dashboard():
-    st.markdown("<h1 style='text-align:center;'>Analyst Dashboard</h1>", unsafe_allow_html=True)
-
-    # Data for the graphs
+# Cached function for generating static data
+@st.cache_data
+def get_data():
     x = np.linspace(0, 10, 100)
     bar_x = np.array([1, 2, 3, 4, 5])
     scatter_x = np.random.rand(100)
     scatter_y = np.random.rand(100)
+    return x, bar_x, scatter_x, scatter_y
+
+# Function to handle page state changes and reruns
+def handle_page_state(new_option):
+    if st.session_state.graph_option != new_option:
+        st.session_state.graph_option = new_option
+        st.rerun()
+
+# Analyst dashboard function with graphs
+def show_analyst_dashboard():
+    st.markdown("<h1 style='text-align:center;'>Analyst Dashboard</h1>", unsafe_allow_html=True)
+
+    # Get the cached data
+    x, bar_x, scatter_x, scatter_y = get_data()
 
     # Sidebar graph options
     if 'graph_option' not in st.session_state:
@@ -32,10 +44,8 @@ def show_analyst_dashboard():
         key='graph_dropdown'
     )
     
-    # Check if the graph option has changed, rerun the app if needed
-    if st.session_state.graph_option != graph_options:
-        st.session_state.graph_option = graph_options
-        st.rerun()
+    # Handle graph option change with state management
+    handle_page_state(graph_options)
 
     # Use a container
     with st.container():

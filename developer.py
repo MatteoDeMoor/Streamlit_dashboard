@@ -10,15 +10,27 @@ def download_plot(fig, filename="plot.png"):
     buf.seek(0)
     return buf
 
-# Developer dashboard function with graphs
-def show_developer_dashboard():
-    st.markdown("<h1 style='text-align:center;'>Developer Dashboard</h1>", unsafe_allow_html=True)
-
-    # Data for the graphs
+# Cached function for generating static data
+@st.cache_data
+def get_data():
     x = np.linspace(0, 10, 100)
     bar_x = np.array([1, 2, 3, 4, 5])
     scatter_x = np.random.rand(100)
     scatter_y = np.random.rand(100)
+    return x, bar_x, scatter_x, scatter_y
+
+# Function to handle page state changes and reruns
+def handle_page_state(new_option):
+    if st.session_state.graph_option != new_option:
+        st.session_state.graph_option = new_option
+        st.rerun()
+
+# Developer dashboard function with graphs
+def show_developer_dashboard():
+    st.markdown("<h1 style='text-align:center;'>Developer Dashboard</h1>", unsafe_allow_html=True)
+
+    # Get the cached data
+    x, bar_x, scatter_x, scatter_y = get_data()
 
     # Sidebar graph options
     if 'graph_option' not in st.session_state:
@@ -32,10 +44,8 @@ def show_developer_dashboard():
         key='graph_dropdown'
     )
     
-    # Check if the graph option has changed, rerun the app if needed
-    if st.session_state.graph_option != graph_options:
-        st.session_state.graph_option = graph_options
-        st.rerun()
+    # Handle graph option change with state management
+    handle_page_state(graph_options)
 
     # Use a container
     with st.container():
@@ -97,7 +107,7 @@ def show_developer_dashboard():
             st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
             st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
 
-    # Navigation to Analyst Dashboard - Sidebar Bottom Section
+    # Button to switch to the Analyst Dashboard
     st.sidebar.markdown("<hr>", unsafe_allow_html=True)
     st.sidebar.markdown("<h3 style='text-align:left;'>Want to switch to the Analyst Dashboard?</h3>", unsafe_allow_html=True)
     if st.sidebar.button("Go to Analyst Dashboard"):
