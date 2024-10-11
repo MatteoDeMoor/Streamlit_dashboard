@@ -103,9 +103,3 @@ def show_developer_dashboard():
     if st.sidebar.button("Go to Analyst Dashboard"):
         st.session_state.page = 'analyst'
         st.rerun()
-
-    # Button to go to the Login Page
-    st.sidebar.markdown("<h3 style='text-align:left;'>Want to go to the Login Page?</h3>", unsafe_allow_html=True)
-    if st.sidebar.button("Go to Login Page"):
-        st.session_state.page = 'login'
-        st.rerun()
