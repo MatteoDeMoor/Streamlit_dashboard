@@ -1,21 +1,5 @@
 import streamlit as st
 from PIL import Image
-
-# Inline CSS for background and text colors
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #608099;  /* Light blue Hoki background */
-        color: #bbbdbd;             /* Silver text color */
-    }
-    .stApp {
-        background-color: #608099;  /* Background color for the app container */
-    }
-    </style>
-    """, 
-    unsafe_allow_html=True
-)
     
 # Function to show the first screen (role selection)
 def show_dashboard():
