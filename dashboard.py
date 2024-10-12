@@ -8,7 +8,7 @@ def show_dashboard():
 
     # Load and display the logo in the upper left corner (still in col1 for symmetry)
     with col1:
-        img = Image.open("assets/images/logo-hudson.png")
+        img = Image.open("assets/images/logo-hudson-white.png")
         st.image(img, width=200)
 
     # Center the title in the middle column
