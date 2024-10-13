@@ -12,7 +12,7 @@ with open( "style.css" ) as css:
     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
     
 #Set the font of the plots
-font_path = 'assets/fonts/Moneta-Bold.ttf'  # Your font path goes here
+font_path = './assets/fonts/Moneta-Bold.ttf'  # Your font path goes here
 font_manager.fontManager.addfont(font_path)
 prop = font_manager.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = 'sans-serif'
