@@ -15,8 +15,7 @@ with open( "style.css" ) as css:
 font_path = './assets/fonts/Moneta-Bold.ttf'  # Your font path goes here
 font_manager.fontManager.addfont(font_path)
 prop = font_manager.FontProperties(fname=font_path)
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = prop.get_name()
+plt.rcParams['font.family'] = prop.get_name()
 
 # Manage session state for page navigation
 if 'page' not in st.session_state:
