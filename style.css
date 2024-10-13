@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Moneta";
 
-  src: url("https://cors-anywhere.herokuapp.com/https://www.hudsonsolutions.com/assets/corporate/fonts/moneta-black.ttf")
+  src: url("https://corsproxy.io/?https://www.hudsonsolutions.com/assets/corporate/fonts/moneta-black.ttf")
     format("truetype");
 
   font-weight: normal;
