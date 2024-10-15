@@ -14,15 +14,16 @@ try:
 except FileNotFoundError:
     st.warning("CSS file not found. Please check the path.")
     
-# Set the font of the plots
+# Set the font of the plots to Moneta-Bold
+font_path = './assets/fonts/Moneta-Bold.ttf'  # Ensure the font file is correctly placed
+
 try:
-    font_path = './assets/fonts/Moneta-Bold.ttf'
     font_manager.fontManager.addfont(font_path)
 except FileNotFoundError:
     st.warning("Font file not found. Please check the path.")
 
-prop = font_manager.FontProperties(fname=font_path)
-plt.rcParams['font.family'] = prop.get_name()
+# Set the font family for Matplotlib
+plt.rcParams['font.family'] = 'Moneta-Bold'  # Use the font name directly
 
 # Manage session state for page navigation
 if 'page' not in st.session_state:
@@ -32,18 +33,21 @@ if 'page' not in st.session_state:
 if st.session_state.page == 'role_selection':
     show_dashboard()
     # Add a footer that is fixed at the bottom only for the role selection page
-    footer = """
+    footer = f"""
     <style>
-    .footer {
+    .footer {{
         position: fixed;
         left: 0;
         bottom: 0;
         width: 100%;
         background-color: #608099;
-        color: #ffffff;
         text-align: center;
         padding: 10px;
-    }
+    }}
+    .footer p {{
+        color: #bbbdbd;
+        margin: 0;
+    }}
     </style>
     <div class='footer'>
         <p>© 2024 Hudson Dashboard. All rights reserved.</p>
