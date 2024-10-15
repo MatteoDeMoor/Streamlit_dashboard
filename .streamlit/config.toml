@@ -4,3 +4,9 @@ backgroundColor = "#111f2a"            # Big Stone
 secondaryBackgroundColor = "#608099"   # Hoki
 textColor = "#bbbdbd"                  # Silver
 font = "Moneta-Bold"
+
+[layout]
+mode = "wide"
+
+[sidebar]
+visibility = "expanded"
