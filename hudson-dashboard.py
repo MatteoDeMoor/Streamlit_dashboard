@@ -14,7 +14,7 @@ try:
 except FileNotFoundError:
     st.warning("CSS file not found. Please check the path.")
     
-#Set the font of the plots
+# Set the font of the plots
 try:
     font_path = './assets/fonts/Moneta-Bold.ttf'
     font_manager.fontManager.addfont(font_path)
@@ -31,17 +31,26 @@ if 'page' not in st.session_state:
 # Navigation logic
 if st.session_state.page == 'role_selection':
     show_dashboard()
+    # Add a footer that is fixed at the bottom only for the role selection page
+    footer = """
+    <style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #608099;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px;
+    }
+    </style>
+    <div class='footer'>
+        <p>© 2024 Hudson Dashboard. All rights reserved.</p>
+    </div>
+    """
+    st.markdown(footer, unsafe_allow_html=True)
 elif st.session_state.page == 'analyst':
     show_analyst_dashboard()
 elif st.session_state.page == 'developer':
     show_developer_dashboard()
-
-# Add a footer
-st.markdown("---")  # Adds a horizontal line
-footer = """
-<div style='text-align: center; padding: 10px;'>
-    <p>© 2024 Hudson Dashboard. All rights reserved.</p>
-    <p>Contact: info@hudsondashboard.com | Privacy Policy | Terms of Service</p>
-</div>
-"""
-st.markdown(footer, unsafe_allow_html=True)
