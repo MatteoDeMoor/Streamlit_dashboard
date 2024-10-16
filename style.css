@@ -34,7 +34,7 @@ button[title="View fullscreen"] {
 }
 
 .centered-link:hover {
-  color: var(--text-color);
+  color: var(--secondary-background-color);
   text-decoration: none;
 }
 
