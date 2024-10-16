@@ -16,3 +16,36 @@
 button[title="View fullscreen"] {
   visibility: hidden;
 }
+
+.centered-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust the gap as needed */
+  font-size: 1.2em; /* Adjust font size as needed */
+}
+.centered-link {
+  color: #bbbdbd; /* Use Streamlit's default color */
+  text-decoration: none; /* Remove underline */
+}
+.centered-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+h3 {
+  text-align: center;
+  margin-top: -60px; /* Adjust margin as needed */
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--footer-background-color);
+  text-align: center;
+  padding: 10px;
+}
+.footer p {
+  color: var(--footer-text-color);
+  margin: 0;
+}

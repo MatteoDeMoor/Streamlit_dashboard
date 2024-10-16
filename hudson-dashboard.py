@@ -32,58 +32,27 @@ if 'page' not in st.session_state:
 # Navigation logic
 if st.session_state.page == 'role_selection':
     show_dashboard()
-    
-    # Reduce spacing and adjust padding
+    import streamlit as st
+
+    # Custom CSS to style the links and center them
+
     st.write("##")
-    st.markdown("<h3 style='text-align: center; margin-top: -110px;'>Onze Diensten</h3>", unsafe_allow_html=True)
-    
-    # Adjusted column layout with shorter text
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("### Rekrutering & Selectie")
-        st.write("""
-        Hudson helpt u met meer dan 35 jaar ervaring het juiste talent voor uw organisatie te vinden. 
-        Wij zijn een betrouwbare HR-partner in elke context.
-        """)
+    st.markdown("<h3>Contacteer Hudson</h3>", unsafe_allow_html=True)
 
-    with col2:
-        st.markdown("### Assessment & Development")
-        st.write("""
-        Begeleid uw medewerkers tijdens hun ontwikkeling en groei, zodat ze optimaal presteren binnen uw organisatie.
-        """)
-
-    col3, col4 = st.columns(2)
-    
-    with col3:
-        st.markdown("### Reward Management")
-        st.write("""
-        Hudson biedt ondersteuning bij het beheren van beloningssystemen, salarisstructuren en performance management.
-        """)
-    
-    with col4:
-        st.markdown("### HR Tools")
-        st.write("""
-        Maak gebruik van onze wetenschappelijk onderbouwde HR-tools om uw HR-beleid te verbeteren.
-        """)
+    # Centered links in a single row
+    st.markdown("""
+        <div class="centered-links">
+            <a href="https://www.hudsonsolutions.com/be-nl/contacteer-ons" class="centered-link">Stel ons uw Vraag</a>
+            <a href="https://www.hudsonsolutions.com/be-nl/spontaan-solliciteren" class="centered-link">Solliciteer spontaan</a>
+            <a href="https://www.hudsonsolutions.com/be-nl/onze-kantoren" class="centered-link">Vind een Kantoor</a>
+            <a href="https://www.hudsonsolutions.com/be-nl/over-hudson/werken-bij-hudson" class="centered-link">Werken bij Hudson</a>
+            <a href="https://www.hudsonsolutions.com/media/boddrpko/cookiepolicy_nl_2024.pdf" class="centered-link">Cookiebeleid</a>
+            <a href="https://www.hudsonsolutions.com/media/o1oah3en/privacybeleid_hudson_nl.pdf" class="centered-link">Privacyverklaring</a>
+        </div>
+        """, unsafe_allow_html=True)
 
     # Footer logic remains in Python, as positioning can't be handled in TOML
     footer = f"""
-    <style>
-    .footer {{
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: var(--footer-background-color);
-        text-align: center;
-        padding: 10px;
-    }}
-    .footer p {{
-        color: var(--footer-text-color);
-        margin: 0;
-    }}
-    </style>
     <div class='footer'>
         <p>© 2024 Hudson Dashboard. All rights reserved.</p>
     </div>
