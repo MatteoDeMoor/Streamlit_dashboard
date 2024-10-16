@@ -39,8 +39,13 @@ def show_role_selection():
     st.write("##")
     st.write("##")
     st.write("##")
+    st.write("##")
+    st.write("##")
+    st.write("##")
 
     st.markdown("<h3>Contacteer Hudson</h3>", unsafe_allow_html=True)
+    st.write("##")
+    st.write("##")
     st.markdown("""
         <div class="centered-links">
             <a href="https://www.hudsonsolutions.com/be-nl/contacteer-ons" class="centered-link">Stel ons uw Vraag</a>
