@@ -32,6 +32,41 @@ if 'page' not in st.session_state:
 # Navigation logic
 if st.session_state.page == 'role_selection':
     show_dashboard()
+    
+    # Reduce spacing and adjust padding
+    st.write("##")
+    st.markdown("<h3 style='text-align: center; margin-top: -110px;'>Onze Diensten</h3>", unsafe_allow_html=True)
+    
+    # Adjusted column layout with shorter text
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### Rekrutering & Selectie")
+        st.write("""
+        Hudson helpt u met meer dan 35 jaar ervaring het juiste talent voor uw organisatie te vinden. 
+        Wij zijn een betrouwbare HR-partner in elke context.
+        """)
+
+    with col2:
+        st.markdown("### Assessment & Development")
+        st.write("""
+        Begeleid uw medewerkers tijdens hun ontwikkeling en groei, zodat ze optimaal presteren binnen uw organisatie.
+        """)
+
+    col3, col4 = st.columns(2)
+    
+    with col3:
+        st.markdown("### Reward Management")
+        st.write("""
+        Hudson biedt ondersteuning bij het beheren van beloningssystemen, salarisstructuren en performance management.
+        """)
+    
+    with col4:
+        st.markdown("### HR Tools")
+        st.write("""
+        Maak gebruik van onze wetenschappelijk onderbouwde HR-tools om uw HR-beleid te verbeteren.
+        """)
+
     # Footer logic remains in Python, as positioning can't be handled in TOML
     footer = f"""
     <style>
