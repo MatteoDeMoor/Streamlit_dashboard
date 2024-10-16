@@ -3,7 +3,6 @@ primaryColor = "#ffffff"               # White
 backgroundColor = "#111f2a"            # Big Stone (dark blue)
 secondaryBackgroundColor = "#608099"   # Hoki (light blue)
 textColor = "#bbbdbd"                  # Silver
-font = "Moneta-Bold"
 
 [layout]
 mode = "wide"
