@@ -7,8 +7,14 @@ def show_role_selection():
     col1, col2, col3 = st.columns([1, 2, 1])
 
     with col1:
-        img = Image.open("assets/images/logo-hudson-white.png")
-        st.image(img, width=200)
+        # Load and display the logo
+        try:
+            img = Image.open("assets/images/logo-hudson-white.png")
+            st.image(img, width=200)
+        except FileNotFoundError:
+            st.error("De logo-afbeelding kan niet worden gevonden. Controleer het pad en probeer het opnieuw.")
+        except Exception as e:
+            st.error(f"Er is een fout opgetreden bij het laden van de afbeelding: {e}")
 
     with col2:
         st.markdown("<h1 style='text-align: center;'>Hudson Dashboard</h1>", unsafe_allow_html=True)
