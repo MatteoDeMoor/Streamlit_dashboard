@@ -1,7 +1,7 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
-from dashboard import show_dashboard
+from role_selection import show_role_selection
 from analyst import show_analyst_dashboard
 from developer import show_developer_dashboard
 
@@ -31,7 +31,7 @@ if 'page' not in st.session_state:
 
 # Navigation logic
 if st.session_state.page == 'role_selection':
-    show_dashboard()
+    show_role_selection()
 elif st.session_state.page == 'analyst':
     show_analyst_dashboard()
 elif st.session_state.page == 'developer':
