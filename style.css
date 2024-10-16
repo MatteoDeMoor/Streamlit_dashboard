@@ -29,8 +29,17 @@ button[title="View fullscreen"] {
   color: #bbbdbd; /* Use Streamlit's default color */
   text-decoration: none; /* Remove underline */
 }
+.st-emotion-cache-cvtseu a {
+  color: #bbbdbd; /* Use Streamlit's default color */
+}
+.centered-link * {
+  color: #bbbdbd; /* Use Streamlit's default color */
+  text-decoration: none; /* Remove underline */
+}
+
 .centered-link:hover {
-  text-decoration: underline; /* Add underline on hover */
+  color: #608099;
+  text-decoration: none; /* Add underline on hover */
 }
 h3 {
   text-align: center;
