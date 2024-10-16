@@ -32,31 +32,6 @@ if 'page' not in st.session_state:
 # Navigation logic
 if st.session_state.page == 'role_selection':
     show_dashboard()
-
-    st.write("##")
-    st.write("##")
-    st.write("##")
-    st.markdown("<h3>Contacteer Hudson</h3>", unsafe_allow_html=True)
-
-    # Centered links in a single row
-    st.markdown("""
-        <div class="centered-links">
-            <a href="https://www.hudsonsolutions.com/be-nl/contacteer-ons" class="centered-link">Stel ons uw Vraag</a>
-            <a href="https://www.hudsonsolutions.com/be-nl/spontaan-solliciteren" class="centered-link">Solliciteer spontaan</a>
-            <a href="https://www.hudsonsolutions.com/be-nl/onze-kantoren" class="centered-link">Vind een Kantoor</a>
-            <a href="https://www.hudsonsolutions.com/be-nl/over-hudson/werken-bij-hudson" class="centered-link">Werken bij Hudson</a>
-            <a href="https://www.hudsonsolutions.com/media/boddrpko/cookiepolicy_nl_2024.pdf" class="centered-link">Cookiebeleid</a>
-            <a href="https://www.hudsonsolutions.com/media/o1oah3en/privacybeleid_hudson_nl.pdf" class="centered-link">Privacyverklaring</a>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # Footer logic
-    footer = f"""
-    <div class='footer'>
-        <p>© 2024 Hudson Dashboard. All rights reserved.</p>
-    </div>
-    """
-    st.markdown(footer, unsafe_allow_html=True)
 elif st.session_state.page == 'analyst':
     show_analyst_dashboard()
 elif st.session_state.page == 'developer':
