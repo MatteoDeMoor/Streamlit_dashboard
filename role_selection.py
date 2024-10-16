@@ -6,12 +6,10 @@ def show_role_selection():
     # Create columns for layout to center content
     col1, col2, col3 = st.columns([1, 2, 1])
 
-    # Load and display the logo in the upper left corner
     with col1:
         img = Image.open("assets/images/logo-hudson-white.png")
         st.image(img, width=200)
 
-    # Center the title in the middle column
     with col2:
         st.markdown("<h1 style='text-align: center;'>Hudson Dashboard</h1>", unsafe_allow_html=True)
         st.markdown("<br><br>", unsafe_allow_html=True)
@@ -34,7 +32,6 @@ def show_role_selection():
                     st.session_state.page = "developer"
                     st.rerun()
 
-    # Right column remains empty
     with col3:
         st.empty()
 

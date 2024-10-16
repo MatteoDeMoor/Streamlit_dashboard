@@ -113,3 +113,6 @@ def show_developer_dashboard():
     if st.sidebar.button("Go to Analyst Dashboard"):
         st.session_state.page = 'analyst'
         st.rerun()
+
+if __name__ == "__main__":
+    show_developer_dashboard()
