@@ -30,7 +30,6 @@ def show_role_selection():
                 if role == "Analyst":
                     st.session_state.page = "analyst"
                     st.rerun()
-
                 elif role == "Developer":
                     st.session_state.page = "developer"
                     st.rerun()
@@ -55,14 +54,3 @@ def show_role_selection():
             <a href="https://www.hudsonsolutions.com/media/o1oah3en/privacybeleid_hudson_nl.pdf" class="centered-link">Privacyverklaring</a>
         </div>
     """, unsafe_allow_html=True)
-
-    # Footer logic
-    footer = """
-    <div class='footer'>
-        <p>© 2024 Hudson Dashboard. All rights reserved.</p>
-    </div>
-    """
-    st.markdown(footer, unsafe_allow_html=True)
-
-if __name__ == "__main__":
-    show_role_selection()
