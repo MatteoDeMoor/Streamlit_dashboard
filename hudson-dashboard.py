@@ -14,16 +14,6 @@ try:
         st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 except FileNotFoundError:
     st.warning("CSS file not found. Please check the path.")
-    
-# Set the font
-font_path = './assets/fonts/Moneta-Bold.ttf'
-try:
-    font_manager.fontManager.addfont(font_path)
-except FileNotFoundError:
-    st.warning("Font file not found. Please check the path.")
-
-# Set the font family for Matplotlib
-plt.rcParams['font.family'] = 'Moneta-Bold'
 
 # Manage session state for page navigation
 if 'page' not in st.session_state:
