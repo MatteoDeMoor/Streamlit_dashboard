@@ -8,22 +8,22 @@ from developer import show_developer_dashboard
 # Set the page title and layout
 st.set_page_config(page_title="Hudson Dashboard", layout="wide", page_icon="assets/images/logo--light.png")
 
+# Set the CSS
 try:
     with open("style.css") as css:
         st.markdown(f'<style>{css.read()}</style>', unsafe_allow_html=True)
 except FileNotFoundError:
     st.warning("CSS file not found. Please check the path.")
     
-# Set the font of the plots to Moneta-Bold
-font_path = './assets/fonts/Moneta-Bold.ttf'  # Ensure the font file is correctly placed
-
+# Set the font
+font_path = './assets/fonts/Moneta-Bold.ttf'
 try:
     font_manager.fontManager.addfont(font_path)
 except FileNotFoundError:
     st.warning("Font file not found. Please check the path.")
 
 # Set the font family for Matplotlib
-plt.rcParams['font.family'] = 'Moneta-Bold'  # Use the font name directly
+plt.rcParams['font.family'] = 'Moneta-Bold'
 
 # Manage session state for page navigation
 if 'page' not in st.session_state:
@@ -32,10 +32,9 @@ if 'page' not in st.session_state:
 # Navigation logic
 if st.session_state.page == 'role_selection':
     show_dashboard()
-    import streamlit as st
 
-    # Custom CSS to style the links and center them
-
+    st.write("##")
+    st.write("##")
     st.write("##")
     st.markdown("<h3>Contacteer Hudson</h3>", unsafe_allow_html=True)
 
@@ -51,7 +50,7 @@ if st.session_state.page == 'role_selection':
         </div>
         """, unsafe_allow_html=True)
 
-    # Footer logic remains in Python, as positioning can't be handled in TOML
+    # Footer logic
     footer = f"""
     <div class='footer'>
         <p>© 2024 Hudson Dashboard. All rights reserved.</p>
