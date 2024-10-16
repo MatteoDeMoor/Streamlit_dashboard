@@ -33,9 +33,10 @@ button[title="View fullscreen"] {
   color: var(--text-color);
 }
 
-.centered-link:hover {
-  color: var(--secondary-background-color);
+.centered-link {
+  color: var(--secondary-background-color, #333);
   text-decoration: none;
+  transition: color 0.3s;
 }
 
 h3 {
