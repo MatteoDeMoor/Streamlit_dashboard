@@ -10,3 +10,7 @@ mode = "wide"
 
 [sidebar]
 visibility = "expanded"
+
+[footer]
+backgroundColor = "#608099"
+textColor = "#bbbdbd"
