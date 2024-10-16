@@ -32,7 +32,7 @@ if 'page' not in st.session_state:
 # Navigation logic
 if st.session_state.page == 'role_selection':
     show_dashboard()
-    # Add a footer that is fixed at the bottom only for the role selection page
+    # Footer logic remains in Python, as positioning can't be handled in TOML
     footer = f"""
     <style>
     .footer {{
@@ -40,12 +40,12 @@ if st.session_state.page == 'role_selection':
         left: 0;
         bottom: 0;
         width: 100%;
-        background-color: #608099;
+        background-color: var(--footer-background-color);
         text-align: center;
         padding: 10px;
     }}
     .footer p {{
-        color: #bbbdbd;
+        color: var(--footer-text-color);
         margin: 0;
     }}
     </style>
