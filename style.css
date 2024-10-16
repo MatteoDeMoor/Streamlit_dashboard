@@ -25,21 +25,21 @@ button[title="View fullscreen"] {
 }
 
 .centered-link {
-  color: #bbbdbd;
+  color: var(--footer-background-color);
   text-decoration: none;
 }
 
 .st-emotion-cache-cvtseu a {
-  color: #bbbdbd;
+  color: var(--footer-background-color);
 }
 
 .centered-link * {
-  color: #bbbdbd;
+  color: var(--footer-background-color);
   text-decoration: none;
 }
 
 .centered-link:hover {
-  color: #608099;
+  color: var(--secondary-background-color);
   text-decoration: none;
 }
 
