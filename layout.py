@@ -1,4 +1,17 @@
 import streamlit as st
+import os
+import matplotlib.font_manager as fm
+import matplotlib.pyplot as plt
+
+def load_custom_font_graphs():
+    font_path = './assets/fonts/Moneta-Bold.ttf'
+
+    if not os.path.exists(font_path):
+        raise FileNotFoundError(f"Font file not found at: {font_path}")
+
+    font_prop = fm.FontProperties(fname=font_path)
+    fm.fontManager.addfont(font_path)
+    plt.rcParams['font.family'] = font_prop.get_name()
 
 def load_custom_css():
     """Load custom CSS from a file and apply it to the Streamlit app."""
