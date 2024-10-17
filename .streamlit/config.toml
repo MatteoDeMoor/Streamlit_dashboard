@@ -1,6 +1,6 @@
 [theme]
-primaryColor = "#ffffff"               # White
-backgroundColor = "#111f2a"            # Big Stone (dark blue)
+primaryColor = "#111f2a"               # White
+backgroundColor = "#ffffff"            # Big Stone (dark blue)
 secondaryBackgroundColor = "#608099"   # Hoki (light blue)
 textColor = "#bbbdbd"                  # Silver
 
