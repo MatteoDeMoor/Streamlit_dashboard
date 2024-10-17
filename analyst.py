@@ -108,7 +108,9 @@ def show_analyst_dashboard():
             st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
 
     # Button to switch to the Developer
-    if st.header.button("Go to Developer Dashboard"):
+    st.sidebar.markdown("<hr>", unsafe_allow_html=True)
+    st.sidebar.markdown("<h3 style='text-align:left;'>Want to switch to the Developer Dashboard?</h3>", unsafe_allow_html=True)
+    if st.sidebar.button("Go to Developer Dashboard"):
         st.session_state.page = 'developer'
         st.rerun()
 
