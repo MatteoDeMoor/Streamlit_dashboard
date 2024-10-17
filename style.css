@@ -1,3 +1,10 @@
+:root {
+  --primaryColor: #ffffff;
+  --backgroundColor: #111f2a;
+  --secondaryBackgroundColor: #608099;
+  --textColor: #bbbdbd;
+}
+
 @font-face {
   font-family: "Moneta";
   src: url("https://corsproxy.io/?https://www.hudsonsolutions.com/assets/corporate/fonts/moneta-black.ttf")
@@ -25,17 +32,17 @@ button[title="View fullscreen"] {
 }
 
 .centered-link {
-  color: var(--text-color);
+  color: var(--textColor);
   text-decoration: none;
 }
 
 .st-emotion-cache-cvtseu a {
-  color: var(--text-color);
+  color: var(---textColor);
 }
 
-.centered-link {
-  color: var(--secondary-background-color, #333);
-  text-decoration: none;
+.centered-link:hover {
+  color: var(--secondaryBackgroundColor);
+  text-decoration: underline;
   transition: color 0.3s;
 }
 
@@ -49,13 +56,13 @@ h3 {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: var(--footer-background-color, #333);
+  background-color: var(--secondaryBackgroundColor);
   text-align: center;
   padding: 10px;
 }
 
 .footer p {
-  color: var(--text-color);
+  color: var(--textColor);
   margin: 0;
 }
 
