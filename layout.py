@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
+from streamlit_option_menu import option_menu
 
 def load_custom_font_graphs():
     font_path = './assets/fonts/Moneta-Bold.ttf'
@@ -29,3 +30,29 @@ def add_footer():
     </div>
     """
     st.markdown(footer, unsafe_allow_html=True)
+
+# Definieer de add_navbar functie
+def add_navbar():
+    # Maak een horizontale navigatiebalk met alleen de dashboardknoppen
+    selected = option_menu(
+        menu_title=None,
+        options=["Analyst Dashboard", "Developer Dashboard"],
+        icons=["bar-chart", "bar-chart"],
+        default_index=0,
+        orientation="horizontal",
+        styles={
+            "container": {"padding": "0!important", "background-color": "#111f2a"},
+            "icon": {"color": "white"},
+            "nav-link": {"font-size": "16px", "color": "white"},
+            "nav-link-selected": {"background-color": "transparent", "color": "white"},
+        }
+    )
+
+    # Update de sessietoestand op basis van de geselecteerde optie
+    if selected == "Analyst Dashboard" and st.session_state.page != 'analyst':
+        st.session_state.page = 'analyst'
+        st.rerun()
+
+    elif selected == "Developer Dashboard" and st.session_state.page != 'developer':
+        st.session_state.page = 'developer'
+        st.rerun()

@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 from io import BytesIO
+from layout import add_navbar
 
 # Function to convert graphs to PNG and download
 def download_plot(fig, filename="plot.png"):
@@ -27,6 +28,10 @@ def handle_page_state(new_option):
 
 # Analyst dashboard function with graphs
 def show_analyst_dashboard():
+    # Add the navigation bar
+    add_navbar()
+
+    # Page title
     st.markdown("<h1 style='text-align:center;'>Analyst Dashboard</h1>", unsafe_allow_html=True)
 
     # Get the cached data
@@ -106,13 +111,6 @@ def show_analyst_dashboard():
             st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
             st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
             st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
-
-    # Button to switch to the Developer
-    st.sidebar.markdown("<hr>", unsafe_allow_html=True)
-    st.sidebar.markdown("<h3 style='text-align:left;'>Want to switch to the Developer Dashboard?</h3>", unsafe_allow_html=True)
-    if st.sidebar.button("Go to Developer Dashboard"):
-        st.session_state.page = 'developer'
-        st.rerun()
 
 if __name__ == "__main__":
     show_analyst_dashboard()
