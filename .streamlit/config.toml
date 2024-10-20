@@ -1,7 +1,12 @@
 [theme]
 primaryColor = "#ffffff"               # White
+<<<<<<< HEAD
 backgroundColor = "#608099"            # Big Stone (dark blue)
 secondaryBackgroundColor = "#111f2a"   # Hoki (light blue)
+=======
+backgroundColor = "#608099"            # Big Stone (light blue)
+secondaryBackgroundColor = "#111f2a"   # Hoki (dark blue)
+>>>>>>> 1d6a87a (Update toml file)
 textColor = "#bbbdbd"                  # Silver
 
 [layout]
