@@ -72,12 +72,12 @@ h3 {
 .stAppToolbar {
   display: none;
 }
-.st-emotion-cache-1tyc88k {
-  box-shadow: #111f2a 0px 0px 10px;
-}
 .custom-header {
   font-family: Arial, sans-serif;
 }
 .custom-header button:hover {
   opacity: 0.8;
+}
+.st-emotion-cache-1tyc88k {
+  display: none;
 }

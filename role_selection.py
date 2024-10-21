@@ -41,7 +41,6 @@ def show_role_selection():
     with col3:
         st.empty()
 
-    st.markdown("<style>.st-emotion-cache-1tyc88k {display:none;}</style>", unsafe_allow_html=True)
 
     # Add white space
     st.write("##")
