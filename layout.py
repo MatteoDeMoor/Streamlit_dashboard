@@ -35,6 +35,11 @@ def add_footer():
 def add_navbar():
     # Maak een horizontale navigatiebalk met alleen de dashboardknoppen
     st.markdown("""<style>
+                            @font-face {
+                                font-family: "Moneta";
+                                src: url("https://corsproxy.io/?https://www.hudsonsolutions.com/assets/corporate/fonts/moneta-black.ttf")
+                                    format("truetype");
+                            }
                             .stMainBlockContainer {
                                 padding-top: 0;
                                 margin-top: 0;
@@ -57,11 +62,11 @@ def add_navbar():
                             .stElementContainer:nth-of-type(1) {
                                 margin-top: 0rem;
                             }
-                            .container-xxl
-                            {
+                            .container-xxl {
                                 font-family: "Moneta", sans-serif !important;
                             }
-                    </style>""",unsafe_allow_html=True) 
+                    </style>""", unsafe_allow_html=True)
+
     selected = option_menu(
         menu_title=None,
         options=["Analyst Dashboard", "Developer Dashboard"],
@@ -71,8 +76,8 @@ def add_navbar():
         styles={
             "container": {"padding": "0!important", "background-color": "#111f2a"},
             "icon": {"color": "white"},
-            "nav-link": {"font-size": "16px", "color": "white"},
-            "nav-link-selected": {"background-color": "transparent", "color": "white"},
+            "nav-link": {"font-size": "16px", "color": "white", "font-family": "Moneta"},
+            "nav-link-selected": {"background-color": "transparent", "color": "white", "font-family": "Moneta"},
         }
     )
 
