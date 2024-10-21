@@ -92,3 +92,15 @@ h1 {
 h2 {
   text-align: center;
 }
+
+button {
+  background-color: var(--secondaryBackgroundColor) !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  cursor: pointer !important;
+}
+
+button:hover {
+  opacity: 0.9 !important;
+}
