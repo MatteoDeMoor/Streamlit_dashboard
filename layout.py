@@ -34,6 +34,34 @@ def add_footer():
 # Definieer de add_navbar functie
 def add_navbar():
     # Maak een horizontale navigatiebalk met alleen de dashboardknoppen
+    st.markdown("""<style>
+                            .stMainBlockContainer {
+                                padding-top: 0;
+                                margin-top: 0;
+                            }
+                            .stVerticalBlock {
+                                display: flex;
+                                flex: 1 1 0%;
+                                flex-direction: column;
+                                gap: 0;
+                            }
+                            .stElementContainer:nth-of-type(2) {
+                                margin-top: 0rem;
+                            }
+                            .stElementContainer:nth-of-type(3) {
+                                margin-top: 0rem;
+                            }
+                            .stElementContainer {
+                                margin-top: 1rem;
+                            }
+                            .stElementContainer:nth-of-type(1) {
+                                margin-top: 0rem;
+                            }
+                            .container-xxl
+                            {
+                                font-family: "Moneta", sans-serif !important;
+                            }
+                    </style>""",unsafe_allow_html=True) 
     selected = option_menu(
         menu_title=None,
         options=["Analyst Dashboard", "Developer Dashboard"],
