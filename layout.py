@@ -69,9 +69,9 @@ def add_navbar():
 
     selected = option_menu(
         menu_title=None,
-        options=["Analyst Dashboard", "Developer Dashboard"],
-        icons=["bar-chart", "bar-chart"],
-        default_index=0,
+        options=["Homepage", "Analyst Dashboard", "Developer Dashboard"],
+        icons=["house", "bar-chart", "bar-chart"],
+        default_index=1,
         orientation="horizontal",
         styles={
             "container": {"padding": "0!important", "background-color": "#111f2a"},
@@ -80,6 +80,11 @@ def add_navbar():
             "nav-link-selected": {"background-color": "transparent", "color": "white", "font-family": "Moneta"},
         }
     )
+
+    # Update de sessietoestand op basis van de geselecteerde optie
+    if selected == "Homepage" and st.session_state.page != 'role_selection':
+        st.session_state.page = 'role_selection'
+        st.rerun()
 
     # Update de sessietoestand op basis van de geselecteerde optie
     if selected == "Analyst Dashboard" and st.session_state.page != 'analyst':
