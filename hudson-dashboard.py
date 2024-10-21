@@ -22,9 +22,7 @@ if st.session_state.page == 'role_selection':
     show_role_selection()
     add_footer()  # Add footer
 elif st.session_state.page == 'analyst':
-    st.markdown("<style>.st-emotion-cache-1tyc88k {display:inherit;}</style>", unsafe_allow_html=True)
     show_analyst_dashboard()
 elif st.session_state.page == 'developer':
-    st.markdown("<style>.st-emotion-cache-1tyc88k {display:inherit;}</style>", unsafe_allow_html=True)
     show_developer_dashboard()
     
