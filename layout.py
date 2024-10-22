@@ -41,7 +41,7 @@ def add_navbar():
                                     format("truetype");
                             }
                             .stMainBlockContainer {
-                                padding-top: 0;
+                                padding: 0;
                                 margin-top: 0;
                             }
                             .stVerticalBlock {
@@ -51,19 +51,22 @@ def add_navbar():
                                 gap: 0;
                             }
                             .stElementContainer:nth-of-type(2) {
-                                margin-top: 0rem;
+                                margin: 0rem;
                             }
                             .stElementContainer:nth-of-type(3) {
-                                margin-top: 0rem;
-                            }
-                            .stElementContainer {
-                                margin-top: 1rem;
+                                margin: 0rem;
                             }
                             .stElementContainer:nth-of-type(1) {
-                                margin-top: 0rem;
+                                margin: 0rem;
+                            }
+                            .stElementContainer {
+                                margin: 1rem;
                             }
                             .container-xxl {
                                 font-family: "Moneta", sans-serif !important;
+                            }
+                            .stVerticalBlock .stVerticalBlock{
+                                margin: 1rem;
                             }
                     </style>""", unsafe_allow_html=True)
 
@@ -74,7 +77,7 @@ def add_navbar():
         default_index=1,
         orientation="horizontal",
         styles={
-            "container": {"padding": "0!important", "background-color": "#111f2a"},
+            "container": {"max-width": "none!important","border-radius":"0rem","padding": "0!important", "background-color": "#608099"},
             "icon": {"color": "white"},
             "nav-link": {"font-size": "16px", "color": "white", "font-family": "Moneta"},
             "nav-link-selected": {"background-color": "transparent", "color": "white", "font-family": "Moneta"},

@@ -104,3 +104,7 @@ button {
 button:hover {
   opacity: 0.9 !important;
 }
+
+iframe {
+  box-shadow: #111f2a 0px 0px 10px;
+}
