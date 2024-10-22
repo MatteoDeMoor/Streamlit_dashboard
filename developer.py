@@ -69,7 +69,7 @@ def show_developer_dashboard():
 
                 # Add a download button for the line chart
                 buf_line_chart = download_plot(fig_line_chart)
-                st.download_button("Download Line Chart as PNG", buf_line_chart, "line_chart.png", "image/png")
+                st.download_button("Download Line Chart", buf_line_chart, "line_chart.png", "image/png")
 
             # Bar Chart
             elif graph_options == "Bar Chart":
@@ -82,7 +82,7 @@ def show_developer_dashboard():
 
                 # Add a download button for the bar chart
                 buf_bar_chart = download_plot(fig_bar_chart)
-                st.download_button("Download Bar Chart as PNG", buf_bar_chart, "bar_chart.png", "image/png")
+                st.download_button("Download Bar Chart", buf_bar_chart, "bar_chart.png", "image/png")
 
             # Horizontal Bar Chart
             elif graph_options == "Horizontal Bar Chart":
@@ -95,7 +95,7 @@ def show_developer_dashboard():
 
                 # Add a download button for the horizontal bar chart
                 buf_horizontal_bar_chart = download_plot(fig_horizontal_bar_chart)
-                st.download_button("Download Horizontal Bar Chart as PNG", buf_horizontal_bar_chart, "horizontal_bar_chart.png", "image/png")
+                st.download_button("Download Horizontal Bar Chart", buf_horizontal_bar_chart, "horizontal_bar_chart.png", "image/png")
 
             # Scatter Plot
             elif graph_options == "Scatter Plot":
@@ -108,7 +108,7 @@ def show_developer_dashboard():
 
                 # Add a download button for the scatter plot
                 buf_scatter_plot = download_plot(fig_scatter_plot)
-                st.download_button("Download Scatter Plot as PNG", buf_scatter_plot, "scatter_plot.png", "image/png")
+                st.download_button("Download Scatter Plot", buf_scatter_plot, "scatter_plot.png", "image/png")
 
                 # Statistics in the right column
                 with col3:
