@@ -108,3 +108,11 @@ button:hover {
 iframe {
   box-shadow: #111f2a 0px 0px 10px;
 }
+
+[data-testid="stSidebarCollapsedControl"] {
+  display: none;
+}
+
+[data-testid="stSidebarCollapseButton"] {
+  display: none;
+}
