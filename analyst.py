@@ -56,11 +56,12 @@ def show_analyst_dashboard():
     with st.container():
         # Line Chart
         if graph_options == "Line Chart":
-            st.markdown("<h2>Line Chart</h2>", unsafe_allow_html=True)
-            fig_line_chart = plt.figure(figsize=(5, 3))
+            st.markdown("<h2 >Line Chart</h2>", unsafe_allow_html=True)
+            fig_line_chart = plt.figure(figsize=(3, 2))
             plt.plot(x, np.sin(x), color='blue', label='sin(x)')
             plt.plot(x, np.cos(x), color='green', label='cos(x)')
             plt.legend()
+            st.pyplot(fig_line_chart)
 
             # Add container and apply CSS class
             st.markdown('<div class="graph-container">', unsafe_allow_html=True)
@@ -73,16 +74,12 @@ def show_analyst_dashboard():
 
         # Bar Chart
         elif graph_options == "Bar Chart":
-            st.markdown("<h2>Bar Chart</h2>", unsafe_allow_html=True)
-            fig_bar_chart = plt.figure(figsize=(5, 3))
+            st.markdown("<h2 >Bar Chart</h2>", unsafe_allow_html=True)
+            fig_bar_chart = plt.figure(figsize=(3, 2))
             plt.bar(bar_x, bar_x * 10)
             plt.xlabel('Categories')
             plt.ylabel('Values')
-
-            # Add container and apply CSS class
-            st.markdown('<div class="graph-container">', unsafe_allow_html=True)
             st.pyplot(fig_bar_chart)
-            st.markdown('</div>', unsafe_allow_html=True)
 
             # Add a download button for the bar chart
             buf_bar_chart = download_plot(fig_bar_chart)
@@ -90,16 +87,12 @@ def show_analyst_dashboard():
 
         # Horizontal Bar Chart
         elif graph_options == "Horizontal Bar Chart":
-            st.markdown("<h2>Horizontal Bar Chart</h2>", unsafe_allow_html=True)
-            fig_horizontal_bar_chart = plt.figure(figsize=(5, 3))
+            st.markdown("<h2 >Horizontal Bar Chart</h2>", unsafe_allow_html=True)
+            fig_horizontal_bar_chart = plt.figure(figsize=(3, 2))
             plt.barh(bar_x, bar_x * 10)
             plt.xlabel('Values')
             plt.ylabel('Categories')
-
-            # Add container and apply CSS class
-            st.markdown('<div class="graph-container">', unsafe_allow_html=True)
             st.pyplot(fig_horizontal_bar_chart)
-            st.markdown('</div>', unsafe_allow_html=True)
 
             # Add a download button for the horizontal bar chart
             buf_horizontal_bar_chart = download_plot(fig_horizontal_bar_chart)
@@ -108,15 +101,11 @@ def show_analyst_dashboard():
         # Scatter Plot
         elif graph_options == "Scatter Plot":
             st.markdown("<h2>Scatter Plot</h2>", unsafe_allow_html=True)
-            fig_scatter_plot = plt.figure(figsize=(5, 3))
+            fig_scatter_plot = plt.figure(figsize=(3, 2))
             plt.scatter(scatter_x, scatter_y, c='blue', alpha=0.5)
             plt.xlabel('X-axis')
             plt.ylabel('Y-axis')
-
-            # Add container and apply CSS class
-            st.markdown('<div class="graph-container">', unsafe_allow_html=True)
             st.pyplot(fig_scatter_plot)
-            st.markdown('</div>', unsafe_allow_html=True)
 
             # Add a download button for the scatter plot
             buf_scatter_plot = download_plot(fig_scatter_plot)
