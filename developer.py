@@ -109,18 +109,24 @@ def show_developer_dashboard():
                 # Add a download button for the scatter plot
                 buf_scatter_plot = download_plot(fig_scatter_plot)
                 st.download_button("Download Scatter Plot", buf_scatter_plot, "scatter_plot.png", "image/png")
-
+                
                 # Statistics in the right column
                 with col3:
                     st.write("##")
                     st.write("##")
                     st.write("##")
-                    st.write("##")
-                    st.write("##")
-                    st.write(f"Mean X: {np.mean(scatter_x):.2f}")
-                    st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
-                    st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
-                    st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
+                    st.write(f"**Mean X**: {np.mean(scatter_x):.2f}")
+                    st.write(f"**Mean Y**: {np.mean(scatter_y):.2f}")
+                    st.write(f"**Median X**: {np.median(scatter_x):.2f}")
+                    st.write(f"**Median Y**: {np.median(scatter_y):.2f}")
+                    st.write(f"**Standard Deviation X**: {np.std(scatter_x):.2f}")
+                    st.write(f"**Standard Deviation Y**: {np.std(scatter_y):.2f}")
+                    st.write(f"**Minimum X**: {np.min(scatter_x):.2f}")
+                    st.write(f"**Minimum Y**: {np.min(scatter_y):.2f}")
+                    st.write(f"**Maximum X**: {np.max(scatter_x):.2f}")
+                    st.write(f"**Maximum Y**: {np.max(scatter_y):.2f}")
+                    st.write(f"**Variance X**: {np.var(scatter_x):.2f}")
+                    st.write(f"**Variance Y**: {np.var(scatter_y):.2f}")
 
 if __name__ == "__main__":
     show_developer_dashboard()
