@@ -38,10 +38,6 @@ def show_role_selection():
                     st.session_state.page = "developer"
                     st.rerun()
 
-    with col3:
-        st.empty()
-
-
     # Add white space
     st.write("##")
     st.write("##")
