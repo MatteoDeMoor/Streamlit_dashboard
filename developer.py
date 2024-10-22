@@ -54,63 +54,73 @@ def show_developer_dashboard():
 
     # Use a container
     with st.container():
-        # Line Chart
-        if graph_options == "Line Chart":
-            st.markdown("<h2 >Line Chart</h2>", unsafe_allow_html=True)
-            fig_line_chart = plt.figure(figsize=(5, 3))
-            plt.plot(x, np.sin(x), color='blue', label='sin(x)')
-            plt.plot(x, np.cos(x), color='green', label='cos(x)')
-            plt.legend()
-            st.pyplot(fig_line_chart)
+        # Split the page into three columns
+        col1, col2, col3 = st.columns([1, 2, 1])  # Middle column is twice as wide
 
-            # Add a download button for the line chart
-            buf_line_chart = download_plot(fig_line_chart)
-            st.download_button("Download Line Chart as PNG", buf_line_chart, "line_chart.png", "image/png")
+        with col2:  # Place the graphs in the middle column
+            # Line Chart
+            if graph_options == "Line Chart":
+                st.markdown("<h2 >Line Chart</h2>", unsafe_allow_html=True)
+                fig_line_chart = plt.figure(figsize=(5, 3))
+                plt.plot(x, np.sin(x), color='blue', label='sin(x)')
+                plt.plot(x, np.cos(x), color='green', label='cos(x)')
+                plt.legend()
+                st.pyplot(fig_line_chart)
 
-        # Bar Chart
-        elif graph_options == "Bar Chart":
-            st.markdown("<h2 >Bar Chart</h2>", unsafe_allow_html=True)
-            fig_bar_chart = plt.figure(figsize=(5, 3))
-            plt.bar(bar_x, bar_x * 10)
-            plt.xlabel('Categories')
-            plt.ylabel('Values')
-            st.pyplot(fig_bar_chart)
+                # Add a download button for the line chart
+                buf_line_chart = download_plot(fig_line_chart)
+                st.download_button("Download Line Chart as PNG", buf_line_chart, "line_chart.png", "image/png")
 
-            # Add a download button for the bar chart
-            buf_bar_chart = download_plot(fig_bar_chart)
-            st.download_button("Download Bar Chart as PNG", buf_bar_chart, "bar_chart.png", "image/png")
+            # Bar Chart
+            elif graph_options == "Bar Chart":
+                st.markdown("<h2 >Bar Chart</h2>", unsafe_allow_html=True)
+                fig_bar_chart = plt.figure(figsize=(5, 3))
+                plt.bar(bar_x, bar_x * 10)
+                plt.xlabel('Categories')
+                plt.ylabel('Values')
+                st.pyplot(fig_bar_chart)
 
-        # Horizontal Bar Chart
-        elif graph_options == "Horizontal Bar Chart":
-            st.markdown("<h2 >Horizontal Bar Chart</h2>", unsafe_allow_html=True)
-            fig_horizontal_bar_chart = plt.figure(figsize=(5, 3))
-            plt.barh(bar_x, bar_x * 10)
-            plt.xlabel('Values')
-            plt.ylabel('Categories')
-            st.pyplot(fig_horizontal_bar_chart)
+                # Add a download button for the bar chart
+                buf_bar_chart = download_plot(fig_bar_chart)
+                st.download_button("Download Bar Chart as PNG", buf_bar_chart, "bar_chart.png", "image/png")
 
-            # Add a download button for the horizontal bar chart
-            buf_horizontal_bar_chart = download_plot(fig_horizontal_bar_chart)
-            st.download_button("Download Horizontal Bar Chart as PNG", buf_horizontal_bar_chart, "horizontal_bar_chart.png", "image/png")
+            # Horizontal Bar Chart
+            elif graph_options == "Horizontal Bar Chart":
+                st.markdown("<h2 >Horizontal Bar Chart</h2>", unsafe_allow_html=True)
+                fig_horizontal_bar_chart = plt.figure(figsize=(5, 3))
+                plt.barh(bar_x, bar_x * 10)
+                plt.xlabel('Values')
+                plt.ylabel('Categories')
+                st.pyplot(fig_horizontal_bar_chart)
 
-        # Scatter Plot
-        elif graph_options == "Scatter Plot":
-            st.markdown("<h2 >Scatter Plot</h2>", unsafe_allow_html=True)
-            fig_scatter_plot = plt.figure(figsize=(5, 3))
-            plt.scatter(scatter_x, scatter_y, c='blue', alpha=0.5)
-            plt.xlabel('X-axis')
-            plt.ylabel('Y-axis')
-            st.pyplot(fig_scatter_plot)
+                # Add a download button for the horizontal bar chart
+                buf_horizontal_bar_chart = download_plot(fig_horizontal_bar_chart)
+                st.download_button("Download Horizontal Bar Chart as PNG", buf_horizontal_bar_chart, "horizontal_bar_chart.png", "image/png")
 
-            # Add a download button for the scatter plot
-            buf_scatter_plot = download_plot(fig_scatter_plot)
-            st.download_button("Download Scatter Plot as PNG", buf_scatter_plot, "scatter_plot.png", "image/png")
+            # Scatter Plot
+            elif graph_options == "Scatter Plot":
+                st.markdown("<h2>Scatter Plot</h2>", unsafe_allow_html=True)
+                fig_scatter_plot = plt.figure(figsize=(5, 3))
+                plt.scatter(scatter_x, scatter_y, c='blue', alpha=0.5)
+                plt.xlabel('X-axis')
+                plt.ylabel('Y-axis')
+                st.pyplot(fig_scatter_plot)
 
-            # Statistics
-            st.write(f"Mean X: {np.mean(scatter_x):.2f}")
-            st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
-            st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
-            st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
+                # Add a download button for the scatter plot
+                buf_scatter_plot = download_plot(fig_scatter_plot)
+                st.download_button("Download Scatter Plot as PNG", buf_scatter_plot, "scatter_plot.png", "image/png")
+
+                # Statistics in the right column
+                with col3:
+                    st.write("##")
+                    st.write("##")
+                    st.write("##")
+                    st.write("##")
+                    st.write("##")
+                    st.write(f"Mean X: {np.mean(scatter_x):.2f}")
+                    st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
+                    st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
+                    st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
 
 if __name__ == "__main__":
     show_developer_dashboard()
