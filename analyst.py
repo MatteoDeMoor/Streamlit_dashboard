@@ -110,11 +110,12 @@ def show_analyst_dashboard():
                 buf_scatter_plot = download_plot(fig_scatter_plot)
                 st.download_button("Download Scatter Plot as PNG", buf_scatter_plot, "scatter_plot.png", "image/png")
 
-                # Statistics
-                st.write(f"Mean X: {np.mean(scatter_x):.2f}")
-                st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
-                st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
-                st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
+                # Statistics in the right column
+                with col3:
+                    st.write(f"Mean X: {np.mean(scatter_x):.2f}")
+                    st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
+                    st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
+                    st.write(f"Standard Deviation Y: {np.std(scatter_y):.2f}")
 
 if __name__ == "__main__":
     show_analyst_dashboard()
