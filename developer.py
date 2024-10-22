@@ -55,7 +55,7 @@ def show_developer_dashboard():
     # Use a container
     with st.container():
         # Split the page into three columns
-        col1, col2, col3 = st.columns([1, 3, 2])
+        col1, col2, col3 = st.columns([1, 2, 1])
 
         with col2:  # Place the graphs in the middle column
             # Line Chart
@@ -115,7 +115,7 @@ def show_developer_dashboard():
                 st.write("##")
                 st.write("##")
                 st.write("##")
-                st.write("## Statistics")
+                st.write("Statistics")
                 st.write(f"**Mean**:     | X: {np.mean(scatter_x):.2f} | Y: {np.mean(scatter_y):.2f}")
                 st.write(f"**Median**:   | X: {np.median(scatter_x):.2f} | Y: {np.median(scatter_y):.2f}")
                 st.write(f"**Std Dev**:  | X: {np.std(scatter_x):.2f} | Y: {np.std(scatter_y):.2f}")
@@ -128,8 +128,8 @@ def show_developer_dashboard():
                 iqr_x = q3_x - q1_x
                 q1_y, q3_y = np.percentile(scatter_y, [25, 75])
                 iqr_y = q3_y - q1_y
-                st.write(f"**IQR**:      | X: {iqr_x:.2f} | Y: {iqr_y:.2f}")
 
+                st.write(f"**IQR**:      | X: {iqr_x:.2f} | Y: {iqr_y:.2f}")
 
 if __name__ == "__main__":
     show_developer_dashboard()
