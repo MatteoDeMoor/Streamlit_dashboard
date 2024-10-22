@@ -107,6 +107,9 @@ button:hover {
 
 iframe {
   box-shadow: #111f2a 0px 0px 10px;
+  position: fixed;
+  background-color: var(--backgroundColor);
+  z-index: 1;
 }
 
 [data-testid="stSidebarCollapsedControl"] {
