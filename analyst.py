@@ -112,6 +112,11 @@ def show_analyst_dashboard():
 
                 # Statistics in the right column
                 with col3:
+                    st.write("##")
+                    st.write("##")
+                    st.write("##")
+                    st.write("##")
+                    st.write("##")
                     st.write(f"Mean X: {np.mean(scatter_x):.2f}")
                     st.write(f"Mean Y: {np.mean(scatter_y):.2f}")
                     st.write(f"Standard Deviation X: {np.std(scatter_x):.2f}")
