@@ -4,7 +4,7 @@ import pyodbc
 from sshtunnel import SSHTunnelForwarder
 from dotenv import load_dotenv
 import pandas as pd
-from BinaryParsers import BinaryBaqHelper
+from BinaryParsers import BinaryBaqHelper, BinaryFcaHelper
 import matplotlib.pyplot as plt
 import numpy as np
 # Load environment variables from .env file
@@ -95,21 +95,6 @@ class DatabaseConnection:
         except Exception as e:
             logging.error(f"Error fetching table names: {e}")
             return []
-    def get_all_times_ARAT(self):
-        if self.connection is None:
-            logging.error("SQL connection is not established.")
-            return []
-        query = """
-        SELECT 
-            DATEDIFF(SECOND,TestStartTime, TestFinishTime) AS TotalSeconds,
-            Data
-        FROM 
-            CandidateResultARAT
-        WHERE 
-            TestFinishTime IS NOT NULL AND TestStartTime IS NOT NULL
-        """
-        df = pd.read_sql(query, self.connection)
-        return df
         
 def main():
     db_connection = DatabaseConnection()
@@ -117,25 +102,9 @@ def main():
         db_connection.open_ssh_tunnel()
         db_connection.open_sql_connection()
 
-        df = db_connection.get_all_times_ARAT()   
     finally:
         db_connection.close_sql_connection()
         db_connection.close_ssh_tunnel()
-    print(df)
-    
-    plt.figure(figsize=(12, 6))
-    plt.boxplot(df['TotalSeconds'], vert=False, patch_artist=True,
-                boxprops=dict(facecolor='skyblue', color='black'),
-                medianprops=dict(color='red'),
-                whiskerprops=dict(color='black'),
-                capprops=dict(color='black'),
-                flierprops=dict(markerfacecolor='red', marker='o', markersize=5))
-
-    plt.title('Box Plot of Total Time (Seconds)')
-    plt.xlabel('Total Time (Seconds)')
-    plt.grid(axis='x', alpha=0.75)
-    plt.tight_layout()
-    plt.show()
         
     
 if __name__ == "__main__":
