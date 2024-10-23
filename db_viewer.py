@@ -3,7 +3,10 @@ import logging
 import pyodbc
 from sshtunnel import SSHTunnelForwarder
 from dotenv import load_dotenv
-
+import pandas as pd
+from BinaryParsers import BinaryBaqHelper
+import matplotlib.pyplot as plt
+import numpy as np
 # Load environment variables from .env file
 load_dotenv()
 
@@ -13,6 +16,8 @@ logging.basicConfig(level=logging.INFO)
 # Retrieve the environment variables
 ssh_hostname = os.getenv('SSH_HOSTNAME')
 ssh_port = int(os.getenv('SSH_PORT', 22))
+ssh_username = os.getenv('SSH_USERNAME')
+ssh_username = os.getenv('SSH_USERNAME')
 ssh_username = os.getenv('SSH_USERNAME')
 ssh_password = os.getenv('SSH_PASSWORD')
 sql_hostname = os.getenv('SQL_HOSTNAME', '127.0.0.1')
@@ -90,24 +95,48 @@ class DatabaseConnection:
         except Exception as e:
             logging.error(f"Error fetching table names: {e}")
             return []
-
+    def get_all_times_ARAT(self):
+        if self.connection is None:
+            logging.error("SQL connection is not established.")
+            return []
+        query = """
+        SELECT 
+            DATEDIFF(SECOND,TestStartTime, TestFinishTime) AS TotalSeconds,
+            Data
+        FROM 
+            CandidateResultARAT
+        WHERE 
+            TestFinishTime IS NOT NULL AND TestStartTime IS NOT NULL
+        """
+        df = pd.read_sql(query, self.connection)
+        return df
+        
 def main():
     db_connection = DatabaseConnection()
     try:
         db_connection.open_ssh_tunnel()
         db_connection.open_sql_connection()
 
-        tables = db_connection.get_table_names()
-        if tables:
-            logging.info("Tables in the database:")
-            for table in tables:
-                logging.info(table)
-        else:
-            logging.info("No tables found in the database.")
-
+        df = db_connection.get_all_times_ARAT()   
     finally:
         db_connection.close_sql_connection()
         db_connection.close_ssh_tunnel()
+    print(df)
+    
+    plt.figure(figsize=(12, 6))
+    plt.boxplot(df['TotalSeconds'], vert=False, patch_artist=True,
+                boxprops=dict(facecolor='skyblue', color='black'),
+                medianprops=dict(color='red'),
+                whiskerprops=dict(color='black'),
+                capprops=dict(color='black'),
+                flierprops=dict(markerfacecolor='red', marker='o', markersize=5))
 
+    plt.title('Box Plot of Total Time (Seconds)')
+    plt.xlabel('Total Time (Seconds)')
+    plt.grid(axis='x', alpha=0.75)
+    plt.tight_layout()
+    plt.show()
+        
+    
 if __name__ == "__main__":
     main()

@@ -33,10 +33,9 @@ def show_role_selection():
             if st.button("Login", use_container_width=True):
                 if role == "Analyst":
                     st.session_state.page = "analyst"
-                    st.rerun()
                 elif role == "Developer":
                     st.session_state.page = "developer"
-                    st.rerun()
+                st.rerun()
 
     # Add white space
     st.write("##")
