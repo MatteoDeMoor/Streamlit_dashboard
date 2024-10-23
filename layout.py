@@ -4,6 +4,7 @@ import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
 from streamlit_option_menu import option_menu
 
+# Functie om aangepaste lettertypen voor grafieken te laden
 def load_custom_font_graphs():
     font_path = './assets/fonts/Moneta-Bold.ttf'
 
@@ -14,6 +15,7 @@ def load_custom_font_graphs():
     fm.fontManager.addfont(font_path)
     plt.rcParams['font.family'] = font_prop.get_name()
 
+# Functie om aangepaste CSS uit een bestand te laden en toe te passen op de Streamlit-app
 def load_custom_css():
     """Load custom CSS from a file and apply it to the Streamlit app."""
     try:
@@ -22,6 +24,7 @@ def load_custom_css():
     except FileNotFoundError:
         st.warning("CSS file not found. Please check the path.")
 
+# Functie om een voettekst met aangepaste opmaak toe te voegen aan de Streamlit-app
 def add_footer():
     """Add a footer with custom styling to the Streamlit app."""
     footer = """
@@ -85,8 +88,8 @@ def add_navbar():
     )
 
     # Update de sessietoestand op basis van de geselecteerde optie
-    if selected == "Homepage" and st.session_state.page != 'role_selection':
-        st.session_state.page = 'role_selection'
+    if selected == "Homepage" and st.session_state.page != 'homepage':
+        st.session_state.page = 'homepage'
         st.rerun()
 
     # Update de sessietoestand op basis van de geselecteerde optie
@@ -94,6 +97,7 @@ def add_navbar():
         st.session_state.page = 'analyst'
         st.rerun()
 
+    # Update de sessietoestand op basis van de geselecteerde optie
     elif selected == "Developer Dashboard" and st.session_state.page != 'developer':
         st.session_state.page = 'developer'
         st.rerun()
