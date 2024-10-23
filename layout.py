@@ -88,8 +88,8 @@ def add_navbar():
     )
 
     # Update de sessietoestand op basis van de geselecteerde optie
-    if selected == "Homepage" and st.session_state.page != 'homepage':
-        st.session_state.page = 'homepage'
+    if selected == "Homepage" and st.session_state.page != 'home':
+        st.session_state.page = 'home'
         st.rerun()
 
     # Update de sessietoestand op basis van de geselecteerde optie

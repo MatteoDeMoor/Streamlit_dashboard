@@ -13,10 +13,10 @@ load_custom_font_graphs()
 
 # Initialize session state for page navigation
 if 'page' not in st.session_state:
-    st.session_state.page = 'homepage'
+    st.session_state.page = 'home'
 
 # Navigation logic
-if st.session_state.page == 'homepage':
+if st.session_state.page == 'home':
     show_homepage() # Show the homepage
     add_footer()  # Add footer
 elif st.session_state.page == 'analyst':
