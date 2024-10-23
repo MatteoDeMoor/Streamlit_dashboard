@@ -69,6 +69,7 @@ def show_analyst_dashboard():
 
                 # Add a download button for the line chart
                 buf_line_chart = download_plot(fig_line_chart)
+                st.write("##")
                 st.download_button("Download Line Chart", buf_line_chart, "line_chart.png", "image/png")
 
             # Bar Chart
@@ -82,6 +83,7 @@ def show_analyst_dashboard():
 
                 # Add a download button for the bar chart
                 buf_bar_chart = download_plot(fig_bar_chart)
+                st.write("##")
                 st.download_button("Download Bar Chart", buf_bar_chart, "bar_chart.png", "image/png")
 
             # Horizontal Bar Chart
@@ -95,6 +97,7 @@ def show_analyst_dashboard():
 
                 # Add a download button for the horizontal bar chart
                 buf_horizontal_bar_chart = download_plot(fig_horizontal_bar_chart)
+                st.write("##")
                 st.download_button("Download Horizontal Bar Chart", buf_horizontal_bar_chart, "horizontal_bar_chart.png", "image/png")
 
             # Scatter Plot
@@ -108,6 +111,7 @@ def show_analyst_dashboard():
 
                 # Add a download button for the scatter plot
                 buf_scatter_plot = download_plot(fig_scatter_plot)
+                st.write("##")
                 st.download_button("Download Scatter Plot", buf_scatter_plot, "scatter_plot.png", "image/png")
 
                 # Statistics in the right column
