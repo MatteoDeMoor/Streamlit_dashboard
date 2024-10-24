@@ -98,57 +98,12 @@ class DatabaseConnection:
             logging.error(f"Error fetching table names: {e}")
             return []
         
-    def fetch_rows(self, table_name):
-        """Fetch rows from the specified table one by one."""
-        if self.connection is None:
-            logging.error("SQL connection is not established.")
-            return
-
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute(f"SELECT Data FROM {table_name}")
-            while True:
-                row = cursor.fetchone()
-                if row is None:
-                    break
-                yield row  # Yield each row one by one for further processing
-        except Exception as e:
-            logging.error(f"Error fetching rows from {table_name}: {e}")
-    def parse_data_SJT(self,data):
-        helper = BinarySjtHelper(bytes(data))
-
-        persons_answers = []
-        person_data = {}
-        for item_index in range(1, helper.total_items + 1):
-            try:
-                parsed_item = helper.parse_item(item_index)
-                if parsed_item is None:
-                    break  # Termination condition
-                print(parsed_item)
-                # Updated key from 'QuestionIndex' to 'ItemIndex'
-                situation_id = parsed_item.get('InstrumentClassId', f'Situation_{parsed_item["ItemIndex"]}')
-                answer = parsed_item.get('TimeSpent', [np.nan])  # Expecting 3 answers per situation
-                person_data[f"{situation_id}_TimeSpent"] = answer
-
-            except Exception as e:
-                logging.error(f"Error parsing candidate , item index {item_index}: {e}")
-
-        if person_data:
-            persons_answers.append(person_data)
-
-        return persons_answers[0]
 def main():
     db_connection = DatabaseConnection()
     try:
         db_connection.open_ssh_tunnel()
         db_connection.open_sql_connection()
-
-        rows = db_connection.fetch_rows('CandidateResultSJT')
-        time_spent_data = []
-        for _ in range(4):
-            parsed_data = db_connection.parse_data_SJT(next(rows)[0])
-            time_spent_data.append(parsed_data)
-
+        db_connection.get_table_names()
     finally:
         db_connection.close_sql_connection()
         db_connection.close_ssh_tunnel()
